@@ -3,28 +3,69 @@ var path = require('path');
 var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
+var log = require('./lib/log')(module);
 var bodyParser = require('body-parser');
+var config = require('./config');
 
-var routes = require('./routes/index');
-var users = require('./routes/users');
+var http = require('http');
+var HttpError = require('./error').HttpError;
 
 var app = express();
 
-// view engine setup
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'hbs');
+app.set('port', config.get('port'));
+
+var server = http.createServer(app);
+server.listen(config.get('port'), function(){
+    log.info('Express server listening on port ' + config.get('port'));
+});
+console.log('Express server listening on port ' + app.get('port'));
 
 // uncomment after placing your favicon in /public
 //app.use(favicon(__dirname + '/public/favicon.ico'));
-app.use(logger('dev'));
+
+if(app.get('env') == 'development'){
+    app.use(logger('dev'));
+} else {
+    app.use(logger('default'));
+}
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
+
 app.use(require('stylus').middleware(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/', routes);
-app.use('/users', users);
+app.use(require('./middleware/sendHttpError'));
+
+app.use(cookieParser());
+
+var store = require('./lib/sessionStore')
+
+var session    = require('express-session');
+var MongoStore = require('connect-mongo')(session);
+var mongoose = require("mongoose");
+
+app.use(session({
+    secret: config.get('session:secret'),
+    key: config.get('session:key'),
+    cookie: config.get('session:cookie'),
+    store: store
+}));
+
+
+app.use(require('./middleware/loadUser'));
+
+var routes = require('./routes')(app);
+
+// view engine setup
+var exphbs  = require('express-handlebars');
+
+app.engine('handlebars', exphbs({defaultLayout: 'main'}));
+app.set('view engine', 'handlebars');
+
+var io = require('./socket')(server);
+app.set('io', io);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

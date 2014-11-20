@@ -1,0 +1,15 @@
+{{> nav-bar}}
+
+<div class="jumbotron">
+    <div class="container">
+        <h1>Hello, world!</h1>
+        <p>Welcome to {{title}}</p>
+        {{#if user}}
+            <p>User Name: {{user.username}}</p>
+        {{else}}
+            <p><a class="btn btn-success btn-lg" href="/sign-in" role="button">Sign In</a></p>
+        {{/if}}
+    </div>
+</div>
+
+
