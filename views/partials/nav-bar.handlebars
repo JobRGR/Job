@@ -11,5 +11,8 @@
                 <li><a href="/sign-in">Sign In</a></li>
             {{/if}}
         </ul>
+        {{#if user}}
+            <p class="navbar-text navbar-right">Signed in as <a href="/cabinet" class="navbar-link">{{user.username}}</a></p>
+        {{/if}}
     </div>
 </nav>

@@ -8,6 +8,8 @@ $(document).ready(function(){
         var data = form.serialize();
        // console.log(data);
 
+        $('.error').removeClass('alert-danger');
+
         $.ajax({
             url: "/sign-in",
             method: "POST",

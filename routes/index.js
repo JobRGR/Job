@@ -7,4 +7,6 @@ module.exports = function(app) {
     app.post('/sign-in', require('./sign-in').post);
 
     app.post('/logout', require('./logout').post);
+
+    app.get('/cabinet', require('./cabinet').get);
 };
