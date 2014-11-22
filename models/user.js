@@ -56,6 +56,23 @@ schema.statics.authorize = function(username, password, callback) {
                     callback(new AuthError("Wrong Password"));
                 }
             } else {
+                callback(new AuthError("Wrong Username"));
+            }
+        }
+    ], callback);
+};
+
+schema.statics.registration = function(username, password, callback) {
+    var User = this;
+
+    async.waterfall([
+        function(callback) {
+            User.findOne({username: username}, callback);
+        },
+        function(user, callback) {
+            if (user) {
+                callback(new AuthError("Name is already used"));
+            } else {
                 var user = new User({username: username, password: password});
                 user.save(function(err) {
                     if (err) return callback(err);
