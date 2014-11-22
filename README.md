@@ -8,15 +8,11 @@ Job
 
 - Run server: ```npm run start```
 
+
 ===
 
 ####Bower install:
 
-- Go to Vendor directory:
-``` cd public/vendor```
-
 - Install all dependencies:
 ``` bower install```
-
-
 
