@@ -10,6 +10,42 @@ var schema = new Schema({
         unique: true,
         required: true
     },
+    firstname:{
+        type: String,
+        required: true
+    },
+    secondname:{
+        type: String,
+        required: true
+    },
+    mail:{
+        type: String,
+        required: true
+    },
+    dob:{
+        type: String,
+        required: true
+    },
+    city:{
+        type: String,
+        required: true
+    },
+    university:{
+        type: String,
+        required: true
+    },
+    direction:{
+        type: String,
+        required: true
+    },
+    specialty:{
+        type: String,
+        required: true
+    },
+    course:{
+        type: String,
+        required: true
+    },
     hashedPassword: {
         type: String,
         required: true
@@ -62,7 +98,19 @@ schema.statics.authorize = function(username, password, callback) {
     ], callback);
 };
 
-schema.statics.registration = function(username, password, callback) {
+schema.statics.registration = function(req, callback) {
+    var username = req.body.username;
+    var password = req.body.password;
+    var firstname = req.body.firstname;
+    var secondname = req.body.secondname;
+    var mail = req.body.mail;
+    var dob = req.body.dob;
+    var city = req.body.city;
+    var university = req.body.university;
+    var direction = req.body.direction;
+    var specialty = req.body.specialty ;
+    var course = req.body.course;
+
     var User = this;
 
     async.waterfall([
@@ -73,7 +121,19 @@ schema.statics.registration = function(username, password, callback) {
             if (user) {
                 callback(new AuthError("Name is already used"));
             } else {
-                var user = new User({username: username, password: password});
+                var user = new User({
+                    username: username,
+                    password: password,
+                    firstname: firstname,
+                    secondname: secondname,
+                    mail: mail,
+                    dob: dob,
+                    university: university,
+                    direction: direction,
+                    specialty: specialty,
+                    course: course,
+                    city: city
+                });
                 user.save(function(err) {
                     if (err) return callback(err);
                     callback(null, user);

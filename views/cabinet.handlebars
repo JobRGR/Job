@@ -1,4 +1,17 @@
-{{> nav-bar}}
 <div class="container">
-    <p>{{user}}</p>
+    <div class="container">
+        <div class="page-header">
+            <h1>{{user.username}} Info:</h1>
+        </div>
+        <h4>Login: {{user.username}}</h4>
+        <h4>First Name: {{user.firstname}}</h4>
+        <h4>Second Name: {{user.secondname}}</h4>
+        <h4>E-Mail: {{user.mail}}</h4>
+        <h4>DOB: {{user.dob}}</h4>
+        <h4>City: {{user.city}}</h4>
+        <h4>University: {{user.university}}</h4>
+        <h4>Direction : {{user.direction }}</h4>
+        <h4>Course: {{user.course}}</h4>
+        <h4>Specialty: {{user.specialty}}</h4>
+    </div>
  </div>

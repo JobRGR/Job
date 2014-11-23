@@ -1,14 +1,19 @@
 $(document).ready(function(){
-    $(document.forms['login-form']).on('submit', function() {
+    $(document.forms['login-form']).on('submit', function(e) {
         var form = $(this);
+        var data = form.serialize();
+
+        var isCorrect = checkData(data);
+
+        if(!isCorrect.bool){
+            $('.error').html(isCorrect.message).addClass('alert-danger');
+            e.preventDefault();
+            return
+        }
 
         $('.error', form).html('');
         $(":submit", form).button("loading");
-
-        var data = form.serialize();
-        // console.log(data);
-
-        $('.error').removeClass('alert-danger');
+        $('.error').removeClass('alert-danger').html("");
 
         $.ajax({
             url: "/sign-up",
@@ -33,6 +38,30 @@ $(document).ready(function(){
                 }
             }
         });
+
         return false;
     });
+
+    function checkData(data) {
+        var ans = {
+            bool: true,
+            message: "OK"
+        };
+
+        var arr = data.split("&")
+        console.log(arr);
+
+        for(var i = 0; i<arr.length; i++){
+
+            var tmp = arr[i].split("=");
+
+            if(!tmp[1].trim().length && tmp.length==2){
+                ans.message = "Wrong " + tmp[0] + "."
+                ans.bool = false;
+                break;
+            }
+        }
+
+        return ans;
+    }
 });
