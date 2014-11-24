@@ -7,3 +7,7 @@ body {
     margin-right: 0px !important;
   }
 }
+#edit,
+#back {
+  float: right;
+}

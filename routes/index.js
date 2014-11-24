@@ -12,4 +12,6 @@ module.exports = function(app) {
     app.post('/logout', require('./logout').post);
 
     app.get('/cabinet', require('./cabinet').get);
+    app.post('/cabinet', require('./cabinet').post);
+    app.post('/cabinet-password', require('./cabinet').password);
 };

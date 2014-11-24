@@ -98,6 +98,79 @@ schema.statics.authorize = function(username, password, callback) {
     ], callback);
 };
 
+schema.statics.password = function(username, password, callback) {
+    var User = this;
+
+    console.log(username, password)
+
+    async.waterfall([
+        function(callback) {
+            User.findOne({username: username}, callback);
+        },
+        function(user, callback) {
+            if (user) {
+                console.log(user);
+                user.hashedPassword = user.encryptPassword(password);
+                console.log(user);
+
+                user.save(function(err) {
+                    if (err) return callback(err);
+                    callback(null, user);
+                });
+            } else {
+                callback(new AuthError("Wrong Username"));
+            }
+        }
+    ], callback);
+};
+
+schema.statics.edit =  function(req, callback) {
+    var username = req.body.lastname;
+
+    var newusername = req.body.username;
+    var password = req.body.password;
+    var firstname = req.body.firstname;
+    var secondname = req.body.secondname;
+    var mail = req.body.mail;
+    var dob = req.body.dob;
+    var city = req.body.city;
+    var university = req.body.university;
+    var direction = req.body.direction;
+    var specialty = req.body.specialty ;
+    var course = req.body.course;
+
+    var User = this;
+
+    async.waterfall([
+        function(callback) {
+            User.findOne({username: username}, callback);
+        },
+        function(user, callback) {
+            if (user) {
+                console.log(user);
+
+                user.username = newusername;
+                user.firstname = firstname;
+                user.secondname = secondname;
+                user.mail = mail;
+                user.dob = dob;
+                user.university = university;
+                user.direction = direction;
+                user.specialty = specialty;
+                user.course =  course;
+                user.city = city;
+
+                user.save(function(err) {
+                    if (err) return callback(err);
+                    callback(null, user);
+                });
+            } else {
+                callback(new AuthError("Wrong Data"));
+            }
+        }
+    ], callback);
+};
+
 schema.statics.registration = function(req, callback) {
     var username = req.body.username;
     var password = req.body.password;
