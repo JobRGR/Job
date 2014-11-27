@@ -14,10 +14,16 @@ body {
 .form-horizontal {
   overflow-x: hidden;
 }
+input[type='checkbox']:focus,
 input[type='file']:focus {
   outline: none;
+  box-shadow: none;
 }
 #img-pic {
   margin-top: 20px;
   width: 300px;
+}
+input[type='checkbox'] {
+  box-shadow: none;
+  outline: none;
 }

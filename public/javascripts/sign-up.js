@@ -20,25 +20,22 @@ $(document).ready(function(){
 
     $(document.forms['login-form']).on('submit', function(e) {
         var form = $(this);
+        var arr = form.serializeArray();
 
-        var data = form.serializeArray().reduce(function(previousValue, currentValue, index, array) {
-            return previousValue + "&" + currentValue.name + "=" + currentValue.value
-        },"");
-
-        data = data.substring(1,data.length);
-
-        var isCorrect = checkData(data);
+        var isCorrect = checkData(arr);
 
         if(!isCorrect.bool){
             $('.error').html(isCorrect.message).addClass('alert-danger');
             e.preventDefault();
             return
+        } else {
+            var data = form.serializeArray().reduce(function(previousValue, currentValue, index, array){
+               previousValue[currentValue.name] = currentValue.value
+               return previousValue
+            },{})
         }
 
-        var obj = {
-            arr: data,
-            img: result
-        };
+        data.img = result
 
         $('.error', form).html('');
         $(":submit", form).button("loading");
@@ -47,7 +44,7 @@ $(document).ready(function(){
         $.ajax({
             url: "/sign-up",
             method: "POST",
-            data:  obj,
+            data:  data,
             complete: function() {
                 $(":submit", form).button("reset");
             },
@@ -60,9 +57,11 @@ $(document).ready(function(){
                     //var error = JSON.parse(jqXHR.responseText);
                     //$('.error', form).html(error.message);
 
-                    var error = $.parseXML(jqXHR.responseText)
-                    $xml = $( error );
-                    $title = $xml.find( "h1" ).html();
+                    //var error = $.parseXML(jqXHR.responseText)
+                    //$xml = $( error );
+                    //$title = $xml.find( "h1" ).html();
+
+                    var $title = jqXHR.responseText.split("h1")[1].split("<")[0].split(">")[1];
                     $('.error').html($title).addClass('alert-danger');
                 }
             }
@@ -71,21 +70,17 @@ $(document).ready(function(){
         return false;
     });
 
-    function checkData(data) {
+    function checkData(arr) {
         var ans = {
             bool: true,
             message: "OK"
         };
 
-        var arr = data.split("&")
-        console.log(arr);
 
         for(var i = 0; i<arr.length; i++){
 
-            var tmp = arr[i].split("=");
-
-            if(!tmp[1].trim().length && tmp.length==2){
-                ans.message = "Wrong " + tmp[0] + "."
+            if(!arr[i].value.trim().length){
+                ans.message = "Wrong " + arr[i].name + "."
                 ans.bool = false;
                 break;
             }

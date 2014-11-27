@@ -20,37 +20,33 @@ $(document).ready(function(){
 
     $(document.forms['edit-form']).on('submit', function(e) {
         var form = $(this);
-        var data = form.serializeArray().reduce(function(previousValue, currentValue, index, array) {
-            return previousValue + "&" + currentValue.name + "=" + currentValue.value
-        },"")
+        var arr = form.serializeArray();
 
-        data = data.substring(1,data.length);
-
-        var isCorrect = checkData(data);
+        var isCorrect = checkData(arr);
 
         if(!isCorrect.bool){
             $('.error').html(isCorrect.message).addClass('alert-danger');
             e.preventDefault();
             return
+        } else {
+            var data = form.serializeArray().reduce(function(previousValue, currentValue, index, array){
+                previousValue[currentValue.name] = currentValue.value
+                return previousValue
+            },{})
         }
 
         $('.error', form).html('');
         $(":submit", form).button("loading");
         $('.error').removeClass('alert-danger').html("");
 
-        data = data + "&lastname=" + $('.navbar-link').html();
-
+        data.lastname=$('.navbar-link').html();
         result = result.length ? result : $('#img-pic')[0].src;
-
-        var obj = {
-            arr: data,
-            img: result
-        };
+        data.img=result;
 
         $.ajax({
             url: "/cabinet",
             method: "POST",
-            data: obj,
+            data: data,
             complete: function() {
                 $(":submit", form).button("reset");
             },
@@ -63,9 +59,11 @@ $(document).ready(function(){
                     //var error = JSON.parse(jqXHR.responseText);
                     //$('.error', form).html(error.message);
 
-                    var error = $.parseXML(jqXHR.responseText)
-                    $xml = $( error );
-                    $title = $xml.find( "h1" ).html();
+                    //var error = $.parseXML(jqXHR.responseText)
+                    //$xml = $( error );
+                    //$title = $xml.find( "h1" ).html();
+
+                    var $title = jqXHR.responseText.split("h1")[1].split("<")[0].split(">")[1];
                     $('.error').html($title).addClass('alert-danger');
                 }
             }
@@ -108,9 +106,11 @@ $(document).ready(function(){
                     //var error = JSON.parse(jqXHR.responseText);
                     //$('.error', form).html(error.message);
 
-                    var error = $.parseXML(jqXHR.responseText)
-                    $xml = $( error );
-                    $title = $xml.find( "h1" ).html();
+                    //var error = $.parseXML(jqXHR.responseText)
+                    //$xml = $( error );
+                    //$title = $xml.find( "h1" ).html();
+
+                    var $title = jqXHR.responseText.split("h1")[1].split("<")[0].split(">")[1];
                     $('.error').html($title).addClass('alert-danger');
                 }
             }
@@ -142,16 +142,22 @@ $(document).ready(function(){
         return ans;
     }
 
-    function correctPassword(data){
-        var arr = data.split("&")
+    function checkData(arr) {
+        var ans = {
+            bool: true,
+            message: "OK"
+        };
 
-        var value = arr.map(function(el){
-                return el.split("=")[1]
-            })
 
-        var isSame = value[0] == value[1],
-            ans = isSame && value[0].trim().length
+        for(var i = 0; i<arr.length; i++){
 
-        return ans
+            if(!arr[i].value.trim().length){
+                ans.message = "Wrong " + arr[i].name + "."
+                ans.bool = false;
+                break;
+            }
+        }
+
+        return ans;
     }
 });

@@ -26,9 +26,11 @@ $(document).ready(function(){
                     //var error = JSON.parse(jqXHR.responseText);
                     //$('.error', form).html(error.message);
 
-                    var error = $.parseXML(jqXHR.responseText)
-                    $xml = $( error );
-                    $title = $xml.find( "h1" ).html();
+                    //var error = $.parseXML(jqXHR.responseText)
+                    //$xml = $( error );
+                    //$title = $xml.find( "h1" ).html();
+
+                    var $title = jqXHR.responseText.split("h1")[1].split("<")[0].split(">")[1];
                     $('.error').html($title).addClass('alert-danger');
                 }
             }

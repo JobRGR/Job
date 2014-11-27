@@ -9,18 +9,24 @@ exports.get = function(req, res) {
 exports.post = function(req, res, next) {
     var username = req.body.username;
     var password = req.body.password;
+    console.log(req.body);
 
+    var check = req.body.check;
 
-    User.authorize(username, password, function (err, user) {
-        if (err) {
-            if(err instanceof AuthError){
-                return next(new HttpError(403, err.message));
-            } else {
-                return next(err);
+    if(check == undefined) {
+        User.authorize(username, password, function (err, user) {
+            if (err) {
+                if (err instanceof AuthError) {
+                    return next(new HttpError(403, err.message));
+                } else {
+                    return next(err);
+                }
             }
-        }
 
-        req.session.user = user._id;
-        res.send({});
-    })
+            req.session.user = user._id;
+            res.send({});
+        })
+    } else {
+        return next(new HttpError(403, "Company is not find"));
+    }
 }
