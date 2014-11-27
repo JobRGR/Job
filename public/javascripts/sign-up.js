@@ -20,7 +20,12 @@ $(document).ready(function(){
 
     $(document.forms['login-form']).on('submit', function(e) {
         var form = $(this);
-        var data = form.serialize();
+
+        var data = form.serializeArray().reduce(function(previousValue, currentValue, index, array) {
+            return previousValue + "&" + currentValue.name + "=" + currentValue.value
+        },"");
+
+        data = data.substring(1,data.length);
 
         var isCorrect = checkData(data);
 

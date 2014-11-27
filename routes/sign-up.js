@@ -7,7 +7,7 @@ exports.get = function(req, res) {
 };
 
 exports.post = function(req, res, next) {
-    console.log(req.body.arr);
+    //console.log(req.body.arr);
 
     var arr = req.body.arr.split("&");
     for(var i=0;i<arr.length;i++){
