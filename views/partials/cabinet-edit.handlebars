@@ -1,5 +1,13 @@
 <form class="form-horizontal login-form" name="edit-form">
     <div class="form-group">
+        <label for="input-img" class="col-lg-2 control-label">Photo</label>
+
+        <div class="col-lg-5">
+            <input name="img" type="file" id="img" multiple="multiple" id="input-photo">
+            <img src="{{user.img}}" id="img-pic">
+        </div>
+    </div>
+    <div class="form-group">
         <label for="input-username" class="col-lg-2 control-label">Login</label>
 
         <div class="col-lg-5">

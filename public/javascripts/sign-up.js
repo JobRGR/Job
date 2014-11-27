@@ -1,4 +1,23 @@
 $(document).ready(function(){
+    var result = "";
+
+    $('#img').change(function(){
+        var preview = $('img');
+        var file = $(this)[0].files[0];
+        var reader = new FileReader();
+
+        reader.onloadend = function () {
+            preview[0].src = reader.result;
+            result = reader.result
+        }
+
+        if (file) {
+            reader.readAsDataURL(file);
+        } else {
+            preview[0].src = "";
+        }
+    });
+
     $(document.forms['login-form']).on('submit', function(e) {
         var form = $(this);
         var data = form.serialize();
@@ -11,6 +30,11 @@ $(document).ready(function(){
             return
         }
 
+        var obj = {
+            arr: data,
+            img: result
+        };
+
         $('.error', form).html('');
         $(":submit", form).button("loading");
         $('.error').removeClass('alert-danger').html("");
@@ -18,7 +42,7 @@ $(document).ready(function(){
         $.ajax({
             url: "/sign-up",
             method: "POST",
-            data: data,
+            data:  obj,
             complete: function() {
                 $(":submit", form).button("reset");
             },

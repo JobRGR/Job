@@ -1,6 +1,7 @@
 var crypto = require('crypto');
 var async = require('async');
 var util = require('util');
+var fs = require('fs');
 var mongoose = require('../lib/mongoose'),
     Schema = mongoose.Schema;
 
@@ -43,6 +44,10 @@ var schema = new Schema({
         required: true
     },
     course:{
+        type: String,
+        required: true
+    },
+    img: {
         type: String,
         required: true
     },
@@ -101,7 +106,7 @@ schema.statics.authorize = function(username, password, callback) {
 schema.statics.password = function(username, password, callback) {
     var User = this;
 
-    console.log(username, password)
+    //console.log(username, password)
 
     async.waterfall([
         function(callback) {
@@ -109,9 +114,9 @@ schema.statics.password = function(username, password, callback) {
         },
         function(user, callback) {
             if (user) {
-                console.log(user);
+                //console.log(user);
                 user.hashedPassword = user.encryptPassword(password);
-                console.log(user);
+                //console.log(user);
 
                 user.save(function(err) {
                     if (err) return callback(err);
@@ -138,6 +143,7 @@ schema.statics.edit =  function(req, callback) {
     var direction = req.body.direction;
     var specialty = req.body.specialty ;
     var course = req.body.course;
+    var img = req.body.img;
 
     var User = this;
 
@@ -147,7 +153,7 @@ schema.statics.edit =  function(req, callback) {
         },
         function(user, callback) {
             if (user) {
-                console.log(user);
+                //console.log(user);
 
                 user.username = newusername;
                 user.firstname = firstname;
@@ -159,6 +165,7 @@ schema.statics.edit =  function(req, callback) {
                 user.specialty = specialty;
                 user.course =  course;
                 user.city = city;
+                user.img = img;
 
                 user.save(function(err) {
                     if (err) return callback(err);
@@ -183,6 +190,7 @@ schema.statics.registration = function(req, callback) {
     var direction = req.body.direction;
     var specialty = req.body.specialty ;
     var course = req.body.course;
+    var img = req.body.img;
 
     var User = this;
 
@@ -194,6 +202,8 @@ schema.statics.registration = function(req, callback) {
             if (user) {
                 callback(new AuthError("Name is already used"));
             } else {
+                //console.log("data");
+
                 var user = new User({
                     username: username,
                     password: password,
@@ -205,8 +215,10 @@ schema.statics.registration = function(req, callback) {
                     direction: direction,
                     specialty: specialty,
                     course: course,
-                    city: city
+                    city: city,
+                    img: img
                 });
+
                 user.save(function(err) {
                     if (err) return callback(err);
                     callback(null, user);

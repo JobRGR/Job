@@ -29,8 +29,11 @@ if(app.get('env') == 'development'){
     app.use(logger('default'));
 }
 
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
+//app.use(bodyParser.json());
+//app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json({limit: '50mb'}));
+app.use(bodyParser.urlencoded({limit: '50mb', extended: true}));
+
 app.use(cookieParser());
 
 app.use(require('stylus').middleware(path.join(__dirname, 'public')));

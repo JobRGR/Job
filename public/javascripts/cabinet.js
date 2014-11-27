@@ -1,4 +1,23 @@
 $(document).ready(function(){
+    var result = "";
+
+    $('#img').change(function(){
+        var preview = $('img');
+        var file = $(this)[0].files[0];
+        var reader = new FileReader();
+
+        reader.onloadend = function () {
+            preview[0].src = reader.result;
+            result = reader.result
+        }
+
+        if (file) {
+            reader.readAsDataURL(file);
+        } else {
+            preview[0].src = "";
+        }
+    });
+
     $(document.forms['edit-form']).on('submit', function(e) {
         var form = $(this);
         var data = form.serialize();
@@ -15,12 +34,19 @@ $(document).ready(function(){
         $(":submit", form).button("loading");
         $('.error').removeClass('alert-danger').html("");
 
-        data = data + "&lastname=" + $('.navbar-link').html()
+        data = data + "&lastname=" + $('.navbar-link').html();
+
+        result = result.length ? result : $('#img-pic')[0].src;
+
+        var obj = {
+            arr: data,
+            img: result
+        };
 
         $.ajax({
             url: "/cabinet",
             method: "POST",
-            data: data,
+            data: obj,
             complete: function() {
                 $(":submit", form).button("reset");
             },

@@ -7,7 +7,16 @@ exports.get = function(req, res) {
 };
 
 exports.post = function(req, res, next) {
-    console.log(req.body);
+    //console.log(req.body);
+
+    var arr = req.body.arr.split("&");
+    for(var i=0;i<arr.length;i++){
+        var tmp = arr[i].split("=");
+        req.body[tmp[0]] = tmp[1]
+    }
+
+    //console.log(req.body);
+
 
     User.edit(req, function (err, user) {
         if (err) {
@@ -24,6 +33,7 @@ exports.post = function(req, res, next) {
 }
 
 exports.password =  function(req, res, next){
+
     var username = req.body.username,
         password = req.body.password;
 

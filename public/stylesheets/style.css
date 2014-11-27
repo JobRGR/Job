@@ -11,3 +11,12 @@ body {
 #back {
   float: right;
 }
+.form-horizontal {
+  overflow-x: hidden;
+}
+input[type='file']:focus {
+  outline: none;
+}
+#img-pic {
+  margin-top: 20px;
+}
