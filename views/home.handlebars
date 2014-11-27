@@ -1,6 +1,11 @@
-{{#if user}}
-    {{> front-sign-in}}
+{{#ifCond user '||' company}}
+    {{#if user}}
+        {{> front-sign-in}}
+    {{else}}
+        {{> front-register-company-in}}
+    {{/if}}
 {{else}}
     {{> front-sign-out}}
-{{/if}}
+{{/ifCond}}
+
 

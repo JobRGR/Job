@@ -12,6 +12,37 @@ var HttpError = require('./error').HttpError;
 
 var app = express();
 
+var exphbs  = require('express-handlebars');
+var hbs = exphbs.create({//хелперы для хендлбара (добавляет или и не равно и т.д.)
+    helpers: {
+        ifCond: function (v1, operator, v2, options) {
+
+            switch (operator) {
+                case '==':
+                    return (v1 == v2) ? options.fn(this) : options.inverse(this);
+                case '===':
+                    return (v1 === v2) ? options.fn(this) : options.inverse(this);
+                case '<':
+                    return (v1 < v2) ? options.fn(this) : options.inverse(this);
+                case '<=':
+                    return (v1 <= v2) ? options.fn(this) : options.inverse(this);
+                case '>':
+                    return (v1 > v2) ? options.fn(this) : options.inverse(this);
+                case '>=':
+                    return (v1 >= v2) ? options.fn(this) : options.inverse(this);
+                case '&&':
+                    return (v1 && v2) ? options.fn(this) : options.inverse(this);
+                case '||':
+                    return (v1 || v2) ? options.fn(this) : options.inverse(this);
+                default:
+                    return options.inverse(this);
+            }
+        }
+    }
+});
+hbs.defaultLayout = 'main';
+
+
 app.set('port', config.get('port'));
 
 var server = http.createServer(app);
@@ -58,13 +89,13 @@ app.use(session({
 
 
 app.use(require('./middleware/loadUser'));
+app.use(require('./middleware/loadCompany'));
 
 var routes = require('./routes')(app);
 
 // view engine setup
-var exphbs  = require('express-handlebars');
 
-app.engine('handlebars', exphbs({defaultLayout: 'main'}));
+app.engine('handlebars', hbs.engine );
 app.set('view engine', 'handlebars');
 
 var io = require('./socket')(server);

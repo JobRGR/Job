@@ -10,7 +10,7 @@ $(document).ready(function(){
         $('.error').removeClass('alert-danger');
 
         $.ajax({
-            url: "/sign-in",
+            url: "/register-company",
             method: "POST",
             data: data,
             complete: function() {
