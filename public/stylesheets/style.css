@@ -19,4 +19,5 @@ input[type='file']:focus {
 }
 #img-pic {
   margin-top: 20px;
+  width: 300px;
 }
