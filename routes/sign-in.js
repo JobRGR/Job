@@ -15,49 +15,46 @@ exports.post = function(req, res, next) {
     var password = req.body.password;
     //console.log(req.body);
 
-    var check = req.body.check;
-
-    /*async.parallel([
-            function(callback){
-                User.authorize(username, password, function (err, user){
-                    callback(err,user)
-                })
+    async.parallel({
+            user: function(callback){
+                User.check(username, callback)
             },
-            function(callback){
-                Company.authorize(username, password, function(err, company){
-                    callback(err,company)
-                })
+            company: function(callback){
+                Company.check(username, callback)
             }
-        ],
+        },
         function(err, results) {
-            console.log(results)
-        });*/
+            var isUser = results.user[0],
+                isCompany = results.company[0]
 
-    if(check == undefined) {
-        User.authorize(username, password, function (err, user) {
-            if (err) {
-                if (err instanceof AuthError) {
-                    return next(new HttpError(403, err.message));
-                } else {
-                    return next(err);
-                }
+            if(isUser){
+                User.authorize(username, password, function (err, user) {
+                    if (err) {
+                        if (err instanceof AuthError) {
+                            return next(new HttpError(403, err.message));
+                        } else {
+                            return next(err);
+                        }
+                    }
+
+                    req.session.user = user._id;
+                    res.send({});
+                })
+            } else if(isCompany){
+                Company.authorize(username, password, function (err, company) {
+                    if (err) {
+                        if (err instanceof AuthError) {
+                            return next(new HttpError(403, err.message));
+                        } else {
+                            return next(err);
+                        }
+                    }
+
+                    req.session.company = company._id;
+                    res.send({});
+                })
+            }  else {
+                next(new HttpError(403, "Wrong login"));
             }
-
-            req.session.user = user._id;
-            res.send({});
-        })
-    } else {
-        Company.authorize(username, password, function (err, company) {
-            if (err) {
-                if (err instanceof AuthError) {
-                    return next(new HttpError(403, err.message));
-                } else {
-                    return next(err);
-                }
-            }
-
-            req.session.company = company._id;
-            res.send({});
-        })
-    }
+        });
 }
