@@ -158,7 +158,7 @@ schema.statics.edit =  function(req, callback) {
                     else
                         callback(new AuthError("Name is already by User"));
                 } else {
-                    Company.check(username, function(err, bool){
+                    Company.check(newusername, function(err, bool){
                         if (bool) {
                             callback(new AuthError("Name is already by Company"));
                         } else {

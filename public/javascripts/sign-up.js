@@ -1,6 +1,7 @@
 $(document).ready(function(){
-    var result = "";
+    var result = "";//base64 value of img
 
+    //открыть изображение и превести в base64
     $('#img').change(function(){
         var preview = $('img');
         var file = $(this)[0].files[0];
@@ -17,6 +18,7 @@ $(document).ready(function(){
             preview[0].src = "";
         }
     });
+
 
     $(document.forms['login-form']).on('submit', function(e) {
         var form = $(this);
@@ -35,7 +37,7 @@ $(document).ready(function(){
             },{})
         }
 
-        data.img = result
+        data.img = result;
 
         $('.error', form).html('');
         $(":submit", form).button("loading");
