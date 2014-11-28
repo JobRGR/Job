@@ -5,6 +5,8 @@ var fs = require('fs');
 var mongoose = require('../lib/mongoose'),
     Schema = mongoose.Schema;
 
+var Company = require('./company').Company;
+
 var schema = new Schema({
     username: {
         type: String,
@@ -196,7 +198,13 @@ schema.statics.registration = function(req, callback) {
 
     async.waterfall([
         function(callback) {
-            User.findOne({username: username}, callback);
+            Company.check(username, function(err, bool){
+                if (bool) {
+                    callback(new AuthError("Name is already by Company"));
+                } else {
+                    User.findOne({username: username}, callback);
+                }
+            });
         },
         function(user, callback) {
             if (user) {
@@ -223,6 +231,26 @@ schema.statics.registration = function(req, callback) {
                     if (err) return callback(err);
                     callback(null, user);
                 });
+            }
+        }
+    ], callback);
+};
+
+//проверяем если есть юзер
+//возвращаем да если есть
+//нет если нет
+schema.statics.check = function(name, callback) {
+    var User = this;
+
+    async.waterfall([
+        function(callback) {
+            User.findOne({username: name}, callback);
+        },
+        function(user, callback) {
+            if (user) {
+                callback(null,true);
+            } else {
+                callback(null,false);
             }
         }
     ], callback);
