@@ -151,7 +151,22 @@ schema.statics.edit =  function(req, callback) {
 
     async.waterfall([
         function(callback) {
-            User.findOne({username: username}, callback);
+            User.check(newusername, function(err, bool, user){
+                if (bool) {
+                    if(user.username == username)
+                        User.findOne({username: username}, callback);
+                    else
+                        callback(new AuthError("Name is already by User"));
+                } else {
+                    Company.check(username, function(err, bool){
+                        if (bool) {
+                            callback(new AuthError("Name is already by Company"));
+                        } else {
+                            User.findOne({username: username}, callback);
+                        }
+                    });
+                }
+            });
         },
         function(user, callback) {
             if (user) {
@@ -248,9 +263,9 @@ schema.statics.check = function(name, callback) {
         },
         function(user, callback) {
             if (user) {
-                callback(null,true);
+                callback(null,true,user);
             } else {
-                callback(null,false);
+                callback(null,false,null);
             }
         }
     ], callback);

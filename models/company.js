@@ -160,7 +160,22 @@ schema.statics.edit =  function(req, callback) {
 
     async.waterfall([
         function(callback) {
-            Company.findOne({companyName: companyName}, callback);
+            Company.check(companyName, function(err, bool, company) {
+                if (bool) {
+                    if (company.companyName == username)
+                        Company.findOne({companyName: username}, callback);
+                    else
+                        callback(new AuthError("Name is already by Company"));
+                } else {
+                    User.check(companyName, function(err, bool){
+                        if (bool) {
+                            callback(new AuthError("Name is already by User"));
+                        } else {
+                            Company.findOne({companyName: username}, callback);
+                        }
+                    });
+                }
+            });
         },
         function(company, callback) {
             if (company) {
@@ -195,9 +210,9 @@ schema.statics.check = function(name, callback) {
         },
         function(company, callback) {
             if (company) {
-                callback(null,true);
+                callback(null,true,company);
             } else {
-                callback(null,false);
+                callback(null,false,null);
             }
         }
     ], callback);
