@@ -6,6 +6,7 @@ $('document').ready(function(){
         if(path=="/") li.eq(0).addClass('active');
         else if(path=="/sign-up") li.eq(1).addClass('active');
         else if(path=="/sign-in") li.eq(2).addClass('active');
+        else if(path=="/register-company") li.eq(3).addClass('active');
     })()
 
     $('#log-off').click(function(){

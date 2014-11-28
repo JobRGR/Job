@@ -8,13 +8,20 @@
             {{#if user}}
                 <li><a href="" id="log-off">Log off</a></li>
             {{else}}
-                <li><a href="/sign-up">Sign up</a></li>
-                <li><a href="/sign-in">Sign in</a></li>
-                <li><a href="/register-company">Register company</a></li>
+                {{#if company}}
+                        <li><a href="" id="log-off">Log off</a></li>
+                {{else}}
+                    <li><a href="/sign-up">Sign up</a></li>
+                    <li><a href="/sign-in">Sign in</a></li>
+                    <li><a href="/register-company">Register company</a></li>
+                {{/if}}
             {{/if}}
         </ul>
         {{#if user}}
             <p class="navbar-text navbar-right">Signed in as <a href="/cabinet" class="navbar-link">{{user.username}}</a></p>
+        {{/if}}
+        {{#if company}}
+            <p class="navbar-text navbar-right">Signed in as <a href="/cabinet-company" class="navbar-link">{{company.companyName}}</a></p>
         {{/if}}
     </div>
 </nav>

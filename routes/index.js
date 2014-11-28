@@ -17,4 +17,8 @@ module.exports = function(app) {
     app.get('/cabinet', require('./cabinet').get);
     app.post('/cabinet', require('./cabinet').post);
     app.post('/cabinet-password', require('./cabinet').password);
+
+    app.get('/cabinet-company', require('./cabinet-company').get);
+    app.post('/cabinet-company', require('./cabinet-company').post);
+    app.post('/cabinet-company-password', require('./cabinet-company').password);
 };

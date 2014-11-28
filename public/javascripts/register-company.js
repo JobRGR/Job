@@ -1,18 +1,50 @@
 $(document).ready(function(){
-    $(document.forms['login-form']).on('submit', function() {
+    var result = "";
+
+    $('#img').change(function(){
+        var preview = $('img');
+        var file = $(this)[0].files[0];
+        var reader = new FileReader();
+
+        reader.onloadend = function () {
+            preview[0].src = reader.result;
+            result = reader.result
+        }
+
+        if (file) {
+            reader.readAsDataURL(file);
+        } else {
+            preview[0].src = "";
+        }
+    });
+
+    $(document.forms['login-form']).on('submit', function(e) {
         var form = $(this);
+        var arr = form.serializeArray();
+
+        var isCorrect = checkData(arr);
+
+        if(!isCorrect.bool){
+            $('.error').html(isCorrect.message).addClass('alert-danger');
+            e.preventDefault();
+            return
+        } else {
+            var data = form.serializeArray().reduce(function(previousValue, currentValue, index, array){
+                previousValue[currentValue.name] = currentValue.value
+                return previousValue
+            },{})
+        }
+
+        data.img = result
 
         $('.error', form).html('');
         $(":submit", form).button("loading");
-
-        var data = form.serialize();
-
-        $('.error').removeClass('alert-danger');
+        $('.error').removeClass('alert-danger').html("");
 
         $.ajax({
             url: "/register-company",
             method: "POST",
-            data: data,
+            data:  data,
             complete: function() {
                 $(":submit", form).button("reset");
             },
@@ -34,6 +66,26 @@ $(document).ready(function(){
                 }
             }
         });
+
         return false;
     });
+
+    function checkData(arr) {
+        var ans = {
+            bool: true,
+            message: "OK"
+        };
+
+
+        for(var i = 0; i<arr.length; i++){
+
+            if(!arr[i].value.trim().length){
+                ans.message = "Wrong " + arr[i].name + "."
+                ans.bool = false;
+                break;
+            }
+        }
+
+        return ans;
+    }
 });

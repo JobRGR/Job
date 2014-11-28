@@ -7,8 +7,16 @@ exports.get = function(req, res) {
 };
 
 exports.post = function(req, res, next) {
-    var username = req.body.username;
+
+    //console.log(req.body)
+
     var password = req.body.password;
+    var confirm = req.body.confirm;
+
+    if(confirm!=password){
+        var message = "Not correct confirm of password";
+        return next(new HttpError(403, message));
+    }
 
     Company.registration(req, function (err, company) {
         if (err) {

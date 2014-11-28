@@ -5,7 +5,9 @@ var async = require('async');
 var cookie = require('cookie');
 var sessionStore = require('../lib/sessionStore');
 var HttpError = require('../error').HttpError;
+
 var User = require('../models/user').User;
+var Company = require('../models/company').Company;
 
 var log = require('../lib/log')(module);
 
@@ -20,7 +22,7 @@ function loadSession(sid, callback) {
 
 }
 
-function loadUser(session, callback) {
+/*function loadUser(session, callback) {
 
     if (!session.user) {
         log.debug("Session %s is anonymous", session.id);
@@ -37,6 +39,27 @@ function loadUser(session, callback) {
         }
         log.debug("user findbyId result: " + user);
         callback(null, user);
+    });
+
+}*/
+
+function loadCompany(session, callback) {
+
+    if (!session.company) {
+        log.debug("Session %s is anonymous", session.id);
+        return callback(null, null);
+    }
+
+    log.debug("retrieving company ", session.company);
+
+    User.findById(session.company, function(err, company) {
+        if (err) return callback(err);
+
+        if (!company) {
+            return callback(null, null);
+        }
+        log.debug("company findbyId result: " + company);
+        callback(null, company);
     });
 
 }

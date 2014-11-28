@@ -44,7 +44,7 @@ $(document).ready(function(){
         data.img=result;
 
         $.ajax({
-            url: "/cabinet",
+            url: "/cabinet-company",
             method: "POST",
             data: data,
             complete: function() {
@@ -53,7 +53,7 @@ $(document).ready(function(){
             statusCode: {
                 200: function() {
                     $('.error').html("User data was updated!").addClass('alert-success');
-                    window.location.href = "/cabinet";
+                    window.location.href = "/cabinet-company";
                 },
                 403: function(jqXHR) {
                     //var error = JSON.parse(jqXHR.responseText);
@@ -73,6 +73,7 @@ $(document).ready(function(){
     });
 
     $(document.forms['password-form']).on('submit', function(e) {
+        e.preventDefault();
         var form = $(this);
         var data = form.serialize();
 
@@ -88,10 +89,10 @@ $(document).ready(function(){
         $(":submit", form).button("loading");
         $('.error').removeClass('alert-danger').html("");
 
-        data = data + "&username=" + $('.navbar-link').html()
+        data = data + "&companyName=" + $('.navbar-link').html()
 
         $.ajax({
-            url: "/cabinet-password",
+            url: "/cabinet-company-password",
             method: "POST",
             data: data,
             complete: function() {
@@ -100,7 +101,7 @@ $(document).ready(function(){
             statusCode: {
                 200: function() {
                     $('.error').html("User data was updated!").addClass('alert-success');
-                    window.location.href = "/cabinet";
+                    window.location.href = "/cabinet-company";
                 },
                 403: function(jqXHR) {
                     //var error = JSON.parse(jqXHR.responseText);
