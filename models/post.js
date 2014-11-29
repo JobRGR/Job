@@ -9,7 +9,6 @@ var company = require('./company');
 var schema = new Schema({
     postAuthor: {
         type: String,
-        unique: true,
         required: true
     },
     title: {
