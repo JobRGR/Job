@@ -12,6 +12,12 @@ module.exports = function(app) {
     app.get('/sign-up', require('./sign-up').get);
     app.post('/sign-up', require('./sign-up').post);
 
+    app.get('/post', require('./post').get);
+    app.post('/post', require('./post').post);
+
+    app.get('/feed', require('./feed').get);
+    //app.post('/feed', require('./feed').post);
+
     app.post('/logout', require('./logout').post);
 
     app.get('/cabinet', require('./cabinet').get);

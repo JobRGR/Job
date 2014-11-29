@@ -28,6 +28,6 @@ exports.post = function(req, res, next) {
         }
 
         req.session.company = company._id;
-        res.send({});
+        res.send();
     })
 }
