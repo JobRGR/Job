@@ -27,6 +27,9 @@ input[type='checkbox'] {
   box-shadow: none;
   outline: none;
 }
+#query {
+  min-width: 210px !important;
+}
 .search-img {
   float: right;
   width: 60px;

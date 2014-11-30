@@ -44,6 +44,10 @@ var hbs = exphbs.create({//хелперы для хендлбара (добав�
                 out += options.fn(items[i]);
             }
             return out;
+        },
+        date: function(date,option){
+            var resDate = new Date(date);
+            return resDate.toLocaleDateString()
         }
     }
 });

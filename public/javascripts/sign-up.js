@@ -30,14 +30,18 @@ $(document).ready(function(){
             $('.error').html(isCorrect.message).addClass('alert-danger');
             e.preventDefault();
             return
+        } else if(!result.trim().length){
+            isCorrect.message = "Wrong img."
+            $('.error').html(isCorrect.message).addClass('alert-danger');
+            e.preventDefault();
         } else {
             var data = form.serializeArray().reduce(function(previousValue, currentValue, index, array){
                previousValue[currentValue.name] = currentValue.value
                return previousValue
             },{})
-        }
 
-        data.img = result;
+            data.img = result
+        }
 
         $('.error', form).html('');
         $(":submit", form).button("loading");

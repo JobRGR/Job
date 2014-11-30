@@ -16,16 +16,28 @@ var Search = function(){
             about = "<p class='list-group-item-text'>"+obj.about+"</p>",
             img = "<img src='"+obj.img+"' class='search-img'>";
 
-        var block = "<a href='/company-page?id="+obj._id+"' class='list-group-item'>"+img+title + about+"</a>"
+        var block = "<a href='/company-page?id="+obj._id+"' class='list-group-item'>"+img+title+about+"</a>"
+
+        return block
+    }
+
+    function printPost(obj){
+        var title = "<h4 class='list-group-item-heading'>"+obj.title+"</h4>",
+            location = "<h6>City: "+obj.place+"</h6>",
+            text = "<p class='list-group-item-text'>"+obj.text+"</p>"
+
+        var block = "<a href='/post-details?id="+obj._id+"' class='list-group-item'>"+title+location+text+"</a>"
 
         return block
     }
 
     function printObj(obj){
         var isUser = obj.username !=undefined;
+        var isCopmpany = obj.companyName !=undefined;
 
         if(isUser) return printUser(obj)
-        else return printCompany(obj)
+        else if(isCopmpany) return printCompany(obj)
+        else return printPost(obj)
     }
 
     function output(array){
@@ -41,5 +53,54 @@ var Search = function(){
     return {
         output: output
     }
+}
 
+$('document').ready(function() {
+    (function(){
+        if(location.pathname == "/search-page"){
+            data = JSON.parse(localStorage.search)
+
+            if(data == null) return;
+            else {
+                localStorage.search = JSON.stringify(null);
+                $("#query").val(data);
+                search(data);
+            }
+        }
+
+        if(location.pathname == "/post"){
+            var socket = io.connect('', {
+                reconnect: false
+            });
+
+            $(document.forms['login-form']).on('submit', function() {
+                var form = $(this);
+                var data = form.serializeArray();
+
+                socket.emit('post', data);
+                return false;
+            })
+        }
+    })();
+})
+
+var search = function(data){
+    var isSearchPost = data.indexOf("#")>=0;
+
+    if(isSearchPost)
+        var url = "/search-post?query=" + data.replace(/#/g, "");
+    else
+        var url = "/search-user?query=" + data;
+
+
+    $.get(url,function(res){
+        console.log(res);
+
+        var search = new Search()
+
+        if(res.length)
+            search.output(res);
+        else
+            $('.container').html('<h4>Sorry no data for this query.</h4>');
+    });
 }

@@ -5,7 +5,7 @@
                     <h4 class="list-group-item-heading">{{this.title}}
                         <a href = "/post-edit&id={{this._id}}"><i class = "glyphicon glyphicon-pencil pull-right yellow icon"></i></a>
                         <i class = "glyphicon glyphicon-remove pull-right  icon red" id = "delete"></i>
-                        <a href = "/post-detail&id={{this._id}}"><i class = "glyphicon glyphicon-chevron-right pull-right green icon"></i></a>
+                        <a href = "/post-details?id={{this._id}}"><i class = "glyphicon glyphicon-chevron-right pull-right green icon"></i></a>
                     </h4>
                     <p class="list-group-item-text">{{this.text}}</p>
                     <h6 class="list-group-item-text">
@@ -17,4 +17,7 @@
     </div>
 </div>
 
+
 <script src="/javascripts/post-moderation.js"></script>
+<script src="/javascripts/feed.js"></script>
+

@@ -1,6 +1,8 @@
 var User = require('../models/user').User;
 var Company = require('../models/company').Company;
 
+var Post = require('../models/post').Post;
+
 var HttpError = require('../error').HttpError;
 var AuthError = require('../models/user').AuthError;
 
@@ -11,8 +13,46 @@ exports.render = function(req, res) {
     res.render('search-page');
 };
 
+exports.post = function(req, res){
+    var query = req.query.query.toUpperCase();
+    var queryArray = query.split(" ")
 
-exports.get = function(req, res) {
+    async.waterfall([
+        function(callback){
+            Post.find({},function(err, result){
+                var posts = result.filter(function(post) {
+                    post._doc.sortValue = 0;
+
+                    for(var i = 0;i<queryArray.length;i++) {
+                        if(!queryArray[i].trim().length) continue
+
+                        var propertyArray = ["place","tags","title"]
+
+                        for(var j = 0; j<propertyArray.length;j++){
+                            if(!post[propertyArray[j]]) continue;
+
+                            if(post[propertyArray[j]].toUpperCase().indexOf(queryArray[i])>=0){
+                                post._doc.sortValue++;
+
+                                break
+                            }
+                        }
+                    }
+
+                    return post._doc.sortValue > 0
+                });
+
+                callback(null,posts);
+            });
+        },
+    ], function (err, result) {
+        res.json(result.sort(function(a,b){
+            return a._doc.sortValue < b._doc.sortValue
+        }));
+    });
+}
+
+exports.user = function(req, res) {
     var query = req.query.query.toUpperCase();
     var queryArray = query.split(" ")
 
@@ -38,6 +78,8 @@ exports.get = function(req, res) {
                         var propertyArray = ["username","firstname","secondname","city","specialty","university","skills"]
 
                         for(var j = 0; j<propertyArray.length;j++){
+                            if(!user[propertyArray[j]]) continue;
+
                             if(user[propertyArray[j]].toUpperCase().indexOf(queryArray[i])>=0){
                                 user._doc.sortValue++;
 
@@ -73,6 +115,8 @@ exports.get = function(req, res) {
                         var propertyArray = ["companyName","city","about"]
 
                         for(var j = 0; j<propertyArray.length;j++){
+                            if(!company[propertyArray[j]]) continue;
+
                             if(company[propertyArray[j]].toUpperCase().indexOf(queryArray[i])>=0){
                                 company._doc.sortValue++;
 

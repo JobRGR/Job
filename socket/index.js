@@ -22,11 +22,11 @@ function loadSession(sid, callback) {
 
 }
 
-/*function loadUser(session, callback) {
+function loadUser(session, callback) {
 
     if (!session.user) {
         log.debug("Session %s is anonymous", session.id);
-        return callback(null, null);
+        return callback(null, null, session);
     }
 
     log.debug("retrieving user ", session.user);
@@ -35,13 +35,13 @@ function loadSession(sid, callback) {
         if (err) return callback(err);
 
         if (!user) {
-            return callback(null, null);
+            return callback(null, null, session);
         }
         log.debug("user findbyId result: " + user);
-        callback(null, user);
+        callback(null, user, session);
     });
 
-}*/
+}
 
 function loadCompany(session, callback) {
 
@@ -52,7 +52,7 @@ function loadCompany(session, callback) {
 
     log.debug("retrieving company ", session.company);
 
-    User.findById(session.company, function(err, company) {
+    Company.findById(session.company, function(err, company) {
         if (err) return callback(err);
 
         if (!company) {
@@ -91,7 +91,16 @@ module.exports = function(server) {
                 handshake.session = session;
                 loadUser(session, callback);
             },
-            function(user, callback) {
+            function(user, session, callback) {
+
+                if (!user) {
+                    loadCompany(session, callback);
+                } else {
+                    callback(null, user);
+                }
+
+            },
+            function(user, callback){
 
                 if (!user) {
                     callback(new HttpError(403, "Anonymous session may not connect"));
@@ -143,15 +152,21 @@ module.exports = function(server) {
     });
 
     io.sockets.on('connection', function(socket) {
-        console.log(socket.handshake);
+        //console.log(socket.handshake);
 
        //var username = socket.handshake.user.get('username');
-        var username = User.get('username');
+
+        if( User.get('username'))
+            var username = User.get('username');
+        else
+            var username = User.get('companyName');
+
+        console.log(username);
 
         socket.broadcast.emit('join', username);
 
-        socket.on('message', function(text, cb) {
-            socket.broadcast.emit('message', username, text);
+        socket.on('post', function(text, cb) {
+            socket.broadcast.emit('post', username, text);
             cb && cb();
         });
 

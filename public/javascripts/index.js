@@ -19,26 +19,16 @@ $('document').ready(function(){
     $('#search').click(function(e){
         e.preventDefault();
 
-        var form = $(this);
+        var li = $('.nav li');
+        li.removeClass('active');
 
         var data = $('#query').val()
 
-        var url = "/search-user?query=" + data;
-        //console.log(url);
-
         if(location.pathname != "/search-page"){
-            $('.jumbotron').remove();
-            $('.container').remove();
-            
-            var container = '<div class="container"></div>'
-            $("body").append(container)
-        }
-
-        $.get(url,function(res){
-            console.log(res);
-
-            var search = new Search()
-            search.output(res);
-        });
+            localStorage.search = JSON.stringify(data);
+            location.pathname = "/search-page"
+        } else search(data)
     });
 });
+
+
