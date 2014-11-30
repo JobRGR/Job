@@ -26,8 +26,10 @@ var schema = new Schema({
     date:{
         type: Date,
         default: Date.now,
+        required: false },
+    tags:{
+        type: String,
         required: false }
-
 });
 
 schema.statics.create = function(req,cb) {
@@ -37,7 +39,8 @@ schema.statics.create = function(req,cb) {
         text : req.body.text,
         place : req.body.place,
         date : req.body.date,
-        postAuthor : req.body.id
+        postAuthor : req.body.id,
+        tags : req.body.tags
     });
     post.save(function(err) {
         if (err) return cb(err);
