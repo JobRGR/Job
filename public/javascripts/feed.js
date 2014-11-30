@@ -5,6 +5,7 @@ var socket = io.connect('', {
 socket
     .on('post', function(username,post) {
         console.log(username,post);
+        location.reload();
     })
     .on('leave', function(username) {
         console.log(username + " вышел из чата");

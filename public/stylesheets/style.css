@@ -55,3 +55,6 @@ input[type='checkbox'] {
   padding-left: 10px;
   color: #000;
 }
+.container {
+  padding-bottom: 10px;
+}

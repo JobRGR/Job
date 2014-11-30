@@ -31,11 +31,8 @@ module.exports = function(app) {
     app.get('/search-user',  checkAuth,require('./search').user);
     app.get('/search-post',  checkAuth,require('./search').post);
 
-
-//    app.get('/post-edit', require('./post-edit').get);
-//    app.post('/post-edit', require('./post-edit').post);
-//    app.get('/post-detail', require('./post-detail').get);
-//    app.post('/post-detail', require('./post-detail').post);
+    app.get('/post-edit', require('./post-edit').get);
+    app.post('/post-edit', require('./post-edit').post);
 
     app.post('/delete-post', require('./delete-post').post);
 

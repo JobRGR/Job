@@ -25,13 +25,16 @@ var schema = new Schema({
     },
     date:{
         type: Date,
-        required: true },
+        required: true
+    },
     tags:{
         type: String,
-        required: true },
+        required: true
+    },
     companyName:{
         type: String,
-        required: true}
+        required: true
+    }
     });
 
 schema.statics.create = function(req,cb) {
@@ -51,46 +54,40 @@ schema.statics.create = function(req,cb) {
     });
 };
 
-//schema.statics.edit =  function(req, callback) {
-//    var username = req.body.lastname;
-//
-//    var companyName = req.body.companyName;
-//    var password = req.body.password;
-//    var about = req.body.about;
-//    var city = req.body.city;
-//    var contacts = req.body.contacts;
-//    var img = req.body.img;
-//
-//    var Company = this;
-//
-//    async.waterfall([
-//        function(callback) {
-//            Company.findOne({companyName: companyName}, callback);
-//        },
-//        function(company, callback) {
-//            if (company) {
-//                console.log(company);
-//
-//                company.companyName = companyName;
-//                company.contacts = contacts;
-//                company.about = about;
-//                company.city = city;
-//                company.img = img;
-//
-//                company.save(function(err) {
-//                    if (err) return callback(err);
-//                    callback(null, company);
-//                });
-//            } else {
-//                callback(new AuthError("Wrong Data"));
-//            }
-//        }
-//    ], callback);
-//};
+schema.statics.edit =  function(req, callback) {
 
-//проверяем если есть такая компания
-//возвращаем да если есть
-//нет если нет
+    var title = req.body.title;
+    var text = req.body.text;
+    var place = req.body.place;
+    var tags = req.body.tags;
+
+    var id = req.body.id;
+
+
+    var Post = this;
+
+    async.waterfall([
+        function(callback) {
+            Post.findById(id, callback);
+        },
+        function(post, callback) {
+            if (post) {
+                post.title = title;
+                post.text = text;
+                post.place = place;
+                post.tags = tags;
+
+                post.save(function(err) {
+                    if (err) return callback(err);
+                    callback(null, post);
+                });
+            } else {
+                callback(new AuthError("Wrong Data"));
+            }
+        }
+    ], callback);
+};
+
 
 exports.Post = mongoose.model('Post', schema);
 
