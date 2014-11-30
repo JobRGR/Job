@@ -53,6 +53,10 @@ var schema = new Schema({
         type: String,
         required: true
     },
+    skills: {
+        type: String,
+        required: true
+    },
     hashedPassword: {
         type: String,
         required: true
@@ -146,6 +150,7 @@ schema.statics.edit =  function(req, callback) {
     var specialty = req.body.specialty ;
     var course = req.body.course;
     var img = req.body.img;
+    var skills = req.body.skills;
 
     var User = this;
 
@@ -183,6 +188,7 @@ schema.statics.edit =  function(req, callback) {
                 user.course =  course;
                 user.city = city;
                 user.img = img;
+                user.skills = skills;
 
                 user.save(function(err) {
                     if (err) return callback(err);
@@ -208,6 +214,7 @@ schema.statics.registration = function(req, callback) {
     var specialty = req.body.specialty ;
     var course = req.body.course;
     var img = req.body.img;
+    var skills = req.body.skills;
 
     var User = this;
 
@@ -239,7 +246,8 @@ schema.statics.registration = function(req, callback) {
                     specialty: specialty,
                     course: course,
                     city: city,
-                    img: img
+                    img: img,
+                    skills: skills
                 });
 
                 user.save(function(err) {

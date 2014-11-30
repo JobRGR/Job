@@ -27,4 +27,10 @@ module.exports = function(app) {
     app.get('/cabinet-company', require('./cabinet-company').get);
     app.post('/cabinet-company', require('./cabinet-company').post);
     app.post('/cabinet-company-password', require('./cabinet-company').password);
+
+    app.get('/search-user', require('./search').get);
+    app.get('/search-page', require('./search').render);
+
+    app.get('/user-page', require('./page').user);
+    app.get('/company-page', require('./page').company);
 };
