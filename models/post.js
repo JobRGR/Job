@@ -29,8 +29,11 @@ var schema = new Schema({
         required: false },
     tags:{
         type: String,
-        required: false }
-});
+        required: false },
+    companyName:{
+        type: String,
+        required: false}
+    });
 
 schema.statics.create = function(req,cb) {
     var Post = this;
@@ -40,6 +43,7 @@ schema.statics.create = function(req,cb) {
         place : req.body.place,
         date : req.body.date,
         postAuthor : req.body.id,
+        companyName : req.body.companyName,
         tags : req.body.tags
     });
     post.save(function(err) {

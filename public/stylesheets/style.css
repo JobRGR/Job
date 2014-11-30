@@ -38,3 +38,17 @@ input[type='checkbox'] {
   width: 200px;
   border-radius: 5px;
 }
+.red:hover {
+  color: #f00;
+}
+.yellow:hover {
+  color: #ffbf5a;
+}
+.green:hover {
+  color: #71d118;
+}
+.icon {
+  cursor: pointer;
+  padding-left: 10px;
+  color: #000;
+}

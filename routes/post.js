@@ -10,6 +10,6 @@ exports.post = function(req, res, next) {
 
     Post.create(req, function (err, post) {
        if (err) console.log(err);
-       res.send("done");
+       res.send();
     })
 };

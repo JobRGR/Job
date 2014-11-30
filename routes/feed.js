@@ -5,6 +5,7 @@ var Post = require('../models/post').Post;
 exports.get = function(req, res) {
     var mongoose = require('../lib/mongoose');
     var posts = mongoose.model('Post');
+
     var async = require('async');
 
     async.waterfall([

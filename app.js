@@ -38,12 +38,11 @@ var hbs = exphbs.create({//хелперы для хендлбара (добав�
                     return options.inverse(this);
             }
         },
-        list: function(items,options) {
+        list: function(items, options) {
             var out = '';
             for (var i = items.length-1; i>=0; i--) {
-                out += options.fn(items[i].postAuthor + " write "+ items[i].title);
+                out += options.fn(items[i]);
             }
-
             return out;
         }
     }
