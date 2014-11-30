@@ -25,14 +25,13 @@ var schema = new Schema({
     },
     date:{
         type: Date,
-        default: Date.now,
-        required: false },
+        required: true },
     tags:{
         type: String,
-        required: false },
+        required: true },
     companyName:{
         type: String,
-        required: false}
+        required: true}
     });
 
 schema.statics.create = function(req,cb) {
@@ -41,7 +40,7 @@ schema.statics.create = function(req,cb) {
         title : req.body.title,
         text : req.body.text,
         place : req.body.place,
-        date : req.body.date,
+        date : new Date(),
         postAuthor : req.body.id,
         companyName : req.body.companyName,
         tags : req.body.tags

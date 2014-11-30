@@ -15,7 +15,8 @@ exports.get = function(req, res) {
             });
         }
     ], function(err, result){
-        res.render('feed',{post:result});
+        var q = req.company ? req.company.id : req.user ? req.user.id : "";
+        res.render('feed',{post:result, current: q});
     });
 
 

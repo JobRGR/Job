@@ -6,7 +6,6 @@ $(document).ready(function(){
         $(":submit", form).button("loading");
 
         var data = form.serialize();
-
         $('.error').removeClass('alert-danger');
 
         $.ajax({
