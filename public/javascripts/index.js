@@ -27,7 +27,7 @@ $('document').ready(function(){
         if(location.pathname != "/search-page"){
             localStorage.search = JSON.stringify(data);
             location.pathname = "/search-page"
-        } else search(data)
+        } else search(data, $(".container"))
     });
 });
 

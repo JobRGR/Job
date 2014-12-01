@@ -26,7 +26,7 @@ exports.post = function(req, res){
                     for(var i = 0;i<queryArray.length;i++) {
                         if(!queryArray[i].trim().length) continue
 
-                        var propertyArray = ["place","tags","title"]
+                        var propertyArray = ["place","tags","title","companyName"]
 
                         for(var j = 0; j<propertyArray.length;j++){
                             if(!post[propertyArray[j]]) continue;

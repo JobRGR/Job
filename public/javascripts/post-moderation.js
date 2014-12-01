@@ -1,8 +1,9 @@
 $(document).ready(function(){
-    $("#delete").click(function() {
-        var id = $("#delete").parent().parent().attr('id');
+    $(".red").click(function() {
+        var id = $(this).parent().parent().attr('id');
+//        console.log(id);
         var data = {id:id};
-        $("#delete").parent().parent().remove();
+        $(this).parent().parent().remove();
         $.ajax({
             url: "/delete-post",
             method: "POST",

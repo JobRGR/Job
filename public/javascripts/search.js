@@ -24,24 +24,24 @@ var Search = function(){
     function printPost(obj){
         var title = "<h4 class='list-group-item-heading'>"+obj.title+"</h4>",
             location = "<h6>City: "+obj.place+"</h6>",
-            text = "<p class='list-group-item-text'>"+obj.text+"</p>"
+            text = "<p class='list-group-item-text'>"+obj.text+"</p>",
+            creator = "<h6>Created by: "+obj.companyName+"</h6>"
 
-        var block = "<a href='/post-details?id="+obj._id+"' class='list-group-item'>"+title+location+text+"</a>"
+        var block = "<a href='/post-details?id="+obj._id+"' class='list-group-item'>"+title+location+text+creator+"</a>"
 
         return block
     }
 
     function printObj(obj){
         var isUser = obj.username !=undefined;
-        var isCopmpany = obj.companyName !=undefined;
+        var isCopmpany = obj.about !=undefined;
 
         if(isUser) return printUser(obj)
         else if(isCopmpany) return printCompany(obj)
         else return printPost(obj)
     }
 
-    function output(array){
-        var el = $('.container');
+    function output(array,el){
 
        el.html('')
 
@@ -92,6 +92,8 @@ var search = function(data){
     else
         var url = "/search-user?query=" + data;
 
+    var el = $('.container');
+
 
     $.get(url,function(res){
         console.log(res);
@@ -99,8 +101,8 @@ var search = function(data){
         var search = new Search()
 
         if(res.length)
-            search.output(res);
+            search.output(res, el);
         else
-            $('.container').html('<h4>Sorry no data for this query.</h4>');
+            el.html('<h4>Sorry no data for this query.</h4>');
     });
 }
