@@ -156,9 +156,7 @@ schema.statics.edit =  function(req, callback) {
 
     async.waterfall([
         function(callback) {
-<<<<<<< HEAD
             User.findOne({username: username}, callback);
-=======
             User.check(newusername, function(err, bool, user){//проверяем едм новое имя у компании или у юзера
                 if (bool) {
                     if(user.username == username)
@@ -175,7 +173,6 @@ schema.statics.edit =  function(req, callback) {
                     });
                 }
             });
->>>>>>> origin/master
         },
         function(user, callback) {
             if (user) {
