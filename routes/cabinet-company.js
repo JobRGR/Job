@@ -9,6 +9,7 @@ exports.get = function(req, res) {
 exports.post = function(req, res, next) {
     //console.log(req.body);
 
+
     Company.edit(req, function (err, company) {
         if (err) {
             if(err instanceof AuthError){
