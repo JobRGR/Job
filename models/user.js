@@ -151,7 +151,7 @@ schema.statics.edit =  function(req, callback) {
 
     async.waterfall([
         function(callback) {
-            User.check(newusername, function(err, bool, user){//проверяем едм новое имя у компании или у юзера
+            User.check(newusername, function(err, bool, user){
                 if (bool) {
                     if(user.username == username)
                         User.findOne({username: username}, callback);

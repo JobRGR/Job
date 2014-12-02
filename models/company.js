@@ -89,8 +89,6 @@ schema.statics.registration = function(req, callback) {
 
     async.waterfall([
         function(callback) {//проверяем на наличее такого юзера
-            var User = require('./user').User;
-
             User.check(companyName, function(err, bool){
                 if (bool) {
                     callback(new AuthError("Name is already by User"));
@@ -162,15 +160,13 @@ schema.statics.edit =  function(req, callback) {
 
     async.waterfall([
         function(callback) {
-            Company.check(companyName, function(err, bool, company) {//проверяем едм новое имя у компании или у юзера
+            Company.check(companyName, function(err, bool, company) {
                 if (bool) {
                     if (company.companyName == username)
                         Company.findOne({companyName: username}, callback);
                     else
                         callback(new AuthError("Name is already by Company"));
                 } else {
-                    var User = require('./user').User;
-
                     User.check(companyName, function(err, bool){
                         if (bool) {
                             callback(new AuthError("Name is already by User"));
