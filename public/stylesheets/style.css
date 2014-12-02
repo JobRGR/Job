@@ -27,3 +27,34 @@ input[type='checkbox'] {
   box-shadow: none;
   outline: none;
 }
+#query {
+  min-width: 210px !important;
+}
+.search-img {
+  float: right;
+  width: 60px;
+  border-radius: 5px;
+}
+.page-avatar {
+  float: left;
+  margin-right: 50px;
+  width: 200px;
+  border-radius: 5px;
+}
+.red:hover {
+  color: #f00;
+}
+.yellow:hover {
+  color: #ffbf5a;
+}
+.green:hover {
+  color: #71d118;
+}
+.icon {
+  cursor: pointer;
+  padding-left: 10px;
+  color: #000;
+}
+.container {
+  padding-bottom: 10px;
+}

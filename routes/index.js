@@ -1,4 +1,4 @@
-//var checkAuth = require('../middleware/checkAuth');
+var checkAuth = require('../middleware/checkAuth');
 
 module.exports = function(app) {
     app.get('/', require('./frontpage').get);
@@ -12,13 +12,36 @@ module.exports = function(app) {
     app.get('/sign-up', require('./sign-up').get);
     app.post('/sign-up', require('./sign-up').post);
 
+    app.get('/post',  checkAuth,require('./post').get);
+    app.post('/post',  checkAuth,require('./post').post);
+
+    app.get('/feed',  checkAuth,require('./feed').get);
+    //app.post('/feed',  checkAuth,require('./feed').post);
+
     app.post('/logout', require('./logout').post);
 
-    app.get('/cabinet', require('./cabinet').get);
-    app.post('/cabinet', require('./cabinet').post);
-    app.post('/cabinet-password', require('./cabinet').password);
+    app.get('/cabinet',  checkAuth,require('./cabinet').get);
+    app.post('/cabinet',  checkAuth,require('./cabinet').post);
+    app.post('/cabinet-password',  checkAuth,require('./cabinet').password);
 
-    app.get('/cabinet-company', require('./cabinet-company').get);
-    app.post('/cabinet-company', require('./cabinet-company').post);
-    app.post('/cabinet-company-password', require('./cabinet-company').password);
+    app.get('/cabinet-company',  checkAuth,require('./cabinet-company').get);
+    app.post('/cabinet-company',  checkAuth,require('./cabinet-company').post);
+    app.post('/cabinet-company-password',  checkAuth,require('./cabinet-company').password);
+
+    app.get('/search-user',  checkAuth,require('./search').user);
+    app.get('/search-post',  checkAuth,require('./search').post);
+
+    app.get('/post-edit', require('./post-edit').get);
+    app.post('/post-edit', require('./post-edit').post);
+
+    app.post('/delete-post', require('./delete-post').post);
+
+    app.get('/user-page', require('./page').user);
+    app.get('/company-page', require('./page').company);
+
+    app.get('/search-page', checkAuth,require('./search').render);
+
+    app.get('/user-page',  checkAuth,require('./page').user);
+    app.get('/company-page',  checkAuth,require('./page').company);
+    app.get('/post-details',  checkAuth,require('./page').post);
 };

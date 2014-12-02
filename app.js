@@ -12,37 +12,6 @@ var HttpError = require('./error').HttpError;
 
 var app = express();
 
-var exphbs  = require('express-handlebars');
-var hbs = exphbs.create({//хелперы для хендлбара (добавляет или и не равно и т.д.)
-    helpers: {
-        ifCond: function (v1, operator, v2, options) {
-
-            switch (operator) {
-                case '==':
-                    return (v1 == v2) ? options.fn(this) : options.inverse(this);
-                case '===':
-                    return (v1 === v2) ? options.fn(this) : options.inverse(this);
-                case '<':
-                    return (v1 < v2) ? options.fn(this) : options.inverse(this);
-                case '<=':
-                    return (v1 <= v2) ? options.fn(this) : options.inverse(this);
-                case '>':
-                    return (v1 > v2) ? options.fn(this) : options.inverse(this);
-                case '>=':
-                    return (v1 >= v2) ? options.fn(this) : options.inverse(this);
-                case '&&':
-                    return (v1 && v2) ? options.fn(this) : options.inverse(this);
-                case '||':
-                    return (v1 || v2) ? options.fn(this) : options.inverse(this);
-                default:
-                    return options.inverse(this);
-            }
-        }
-    }
-});
-hbs.defaultLayout = 'main';
-
-
 app.set('port', config.get('port'));
 
 var server = http.createServer(app);
@@ -94,6 +63,47 @@ app.use(require('./middleware/loadCompany'));
 var routes = require('./routes')(app);
 
 // view engine setup
+var exphbs  = require('express-handlebars');
+var hbs = exphbs.create({//хелперы для хендлбара (добавляет или и не равно и т.д.)
+    helpers: {
+        ifCond: function (v1, operator, v2, options) {
+
+            switch (operator) {
+                case '==':
+                    return (v1 == v2) ? options.fn(this) : options.inverse(this);
+                case '===':
+                    return (v1 === v2) ? options.fn(this) : options.inverse(this);
+                case '<':
+                    return (v1 < v2) ? options.fn(this) : options.inverse(this);
+                case '<=':
+                    return (v1 <= v2) ? options.fn(this) : options.inverse(this);
+                case '>':
+                    return (v1 > v2) ? options.fn(this) : options.inverse(this);
+                case '>=':
+                    return (v1 >= v2) ? options.fn(this) : options.inverse(this);
+                case '&&':
+                    return (v1 && v2) ? options.fn(this) : options.inverse(this);
+                case '||':
+                    return (v1 || v2) ? options.fn(this) : options.inverse(this);
+                default:
+                    return options.inverse(this);
+            }
+        },
+        list: function(items, cur, options) {
+            var out = '';
+            for (var i = items.length-1; i>=0; i--) {
+                out += options.fn({a:items[i],b:cur});
+            }
+            return out;
+            //{items[i],cur:cur};
+        },
+        date: function(date, options) {
+            var resDate = new Date(date);
+            return resDate.toLocaleDateString()
+        }
+    }
+});
+hbs.defaultLayout = 'main';
 
 app.engine('handlebars', hbs.engine );
 app.set('view engine', 'handlebars');

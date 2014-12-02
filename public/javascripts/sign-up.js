@@ -1,6 +1,7 @@
 $(document).ready(function(){
-    var result = "";
+    var result = "";//base64 value of img
 
+    //открыть изображение и превести в base64
     $('#img').change(function(){
         var preview = $('img');
         var file = $(this)[0].files[0];
@@ -18,6 +19,7 @@ $(document).ready(function(){
         }
     });
 
+
     $(document.forms['login-form']).on('submit', function(e) {
         var form = $(this);
         var arr = form.serializeArray();
@@ -28,14 +30,18 @@ $(document).ready(function(){
             $('.error').html(isCorrect.message).addClass('alert-danger');
             e.preventDefault();
             return
+        } else if(!result.trim().length){
+            isCorrect.message = "Wrong img."
+            $('.error').html(isCorrect.message).addClass('alert-danger');
+            e.preventDefault();
         } else {
             var data = form.serializeArray().reduce(function(previousValue, currentValue, index, array){
                previousValue[currentValue.name] = currentValue.value
                return previousValue
             },{})
-        }
 
-        data.img = result
+            data.img = result
+        }
 
         $('.error', form).html('');
         $(":submit", form).button("loading");

@@ -53,6 +53,10 @@ var schema = new Schema({
         type: String,
         required: true
     },
+    skills: {
+        type: String,
+        required: true
+    },
     hashedPassword: {
         type: String,
         required: true
@@ -146,12 +150,32 @@ schema.statics.edit =  function(req, callback) {
     var specialty = req.body.specialty ;
     var course = req.body.course;
     var img = req.body.img;
+    var skills = req.body.skills;
 
     var User = this;
 
     async.waterfall([
         function(callback) {
+<<<<<<< HEAD
             User.findOne({username: username}, callback);
+=======
+            User.check(newusername, function(err, bool, user){//проверяем едм новое имя у компании или у юзера
+                if (bool) {
+                    if(user.username == username)
+                        User.findOne({username: username}, callback);
+                    else
+                        callback(new AuthError("Name is already by User"));
+                } else {
+                    Company.check(newusername, function(err, bool){
+                        if (bool) {
+                            callback(new AuthError("Name is already by Company"));
+                        } else {
+                            User.findOne({username: username}, callback);
+                        }
+                    });
+                }
+            });
+>>>>>>> origin/master
         },
         function(user, callback) {
             if (user) {
@@ -168,6 +192,7 @@ schema.statics.edit =  function(req, callback) {
                 user.course =  course;
                 user.city = city;
                 user.img = img;
+                user.skills = skills;
 
                 user.save(function(err) {
                     if (err) return callback(err);
@@ -193,6 +218,7 @@ schema.statics.registration = function(req, callback) {
     var specialty = req.body.specialty ;
     var course = req.body.course;
     var img = req.body.img;
+    var skills = req.body.skills;
 
     var User = this;
 
@@ -224,7 +250,8 @@ schema.statics.registration = function(req, callback) {
                     specialty: specialty,
                     course: course,
                     city: city,
-                    img: img
+                    img: img,
+                    skills: skills
                 });
 
                 user.save(function(err) {

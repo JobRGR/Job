@@ -7,11 +7,14 @@ exports.get = function(req, res) {
 };
 
 exports.post = function(req, res, next) {
+    //req.body.skils = req.body.skills.split(",")
 
     //console.log(req.body);
 
     var password = req.body.password;
     var confirm = req.body.confirm;
+
+    //return
 
     if(confirm!=password){
         var message = "Not correct confirm of password";
