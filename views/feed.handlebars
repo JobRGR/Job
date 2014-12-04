@@ -4,6 +4,7 @@
             <div class="container list-group-item" id = "{{this.a._id}}">
                     <h4 class="list-group-item-heading">{{this.a.title}}
                         {{#ifCond this.a.postAuthor '===' this.b}}
+                            <a href = "/post-respond?id={{this.a._id}}"><i class = "glyphicon glyphicon-comment pull-right blue icon"></i></a>
                             <a href = "/post-edit?id={{this.a._id}}"><i class = "glyphicon glyphicon-pencil pull-right yellow icon"></i></a>
                             <i class = "glyphicon glyphicon-remove pull-right  icon red" id = "delete"></i>
                         {{/ifCond}}

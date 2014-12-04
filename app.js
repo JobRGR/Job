@@ -100,6 +100,16 @@ var hbs = exphbs.create({//хелперы для хендлбара (добав�
         date: function(date, options) {
             var resDate = new Date(date);
             return resDate.toLocaleDateString()
+        },
+        isUser: function(post,username, options) {
+            var filter = post.users.filter(function(val, index){
+                return val == username
+            }, username)
+
+            if(filter.length)
+                return ' <h4>You have already Respond.</h4>'
+            else
+                return '<button type="submit" class="btn btn-default" id="send-user">Respond to the open position</button>'
         }
     }
 });

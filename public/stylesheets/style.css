@@ -50,6 +50,9 @@ input[type='checkbox'] {
 .green:hover {
   color: #71d118;
 }
+.blue:hover {
+  color: #00f;
+}
 .icon {
   cursor: pointer;
   padding-left: 10px;

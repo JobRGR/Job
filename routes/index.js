@@ -31,13 +31,16 @@ module.exports = function(app) {
     app.get('/search-user',  checkAuth,require('./search').user);
     app.get('/search-post',  checkAuth,require('./search').post);
 
-    app.get('/post-edit', require('./post-edit').get);
-    app.post('/post-edit', require('./post-edit').post);
+    app.get('/post-edit', checkAuth,require('./post-edit').get);
+    app.post('/post-edit', checkAuth,require('./post-edit').post);
 
-    app.post('/delete-post', require('./delete-post').post);
+    app.post('/post-respond', checkAuth,require('./post-respond').post);
+    app.get('/post-respond', checkAuth,require('./post-respond').get);
 
-    app.get('/user-page', require('./page').user);
-    app.get('/company-page', require('./page').company);
+    app.post('/delete-post', checkAuth,require('./delete-post').post);
+
+    app.get('/user-page', checkAuth,require('./page').user);
+    app.get('/company-page', checkAuth,require('./page').company);
 
     app.get('/search-page', checkAuth,require('./search').render);
 

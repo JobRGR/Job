@@ -31,6 +31,10 @@ var schema = new Schema({
         type: String,
         required: true
     },
+    users:{
+        type: Array,
+        required: true
+    },
     companyName:{
         type: String,
         required: true
@@ -46,12 +50,35 @@ schema.statics.create = function(req,cb) {
         date : new Date(),
         postAuthor : req.body.id,
         companyName : req.body.companyName,
-        tags : req.body.tags
+        tags : req.body.tags,
+        users : [null]
     });
     post.save(function(err) {
         if (err) return cb(err);
         cb(null,post)
     });
+};
+
+schema.statics.respond = function(req, callback){
+    var postId = req.body.id,
+        user = req.user.username
+
+    var Post = this;
+
+    async.waterfall([
+        function(callback) {
+            Post.findById(postId, callback)
+        },
+        function(post, callback){
+            if(post) {
+                post.users.push(user);
+
+                post.save(function(err) {
+                    if (err) return callback(err);
+                    callback(null, post);
+                });
+            }
+        }] , callback)
 };
 
 schema.statics.edit =  function(req, callback) {

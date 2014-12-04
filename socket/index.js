@@ -155,13 +155,15 @@ module.exports = function(server) {
         //console.log(socket.handshake);
 
        //var username = socket.handshake.user.get('username');
+        if(!User) return
 
         if( User.get('username'))
             var username = User.get('username');
         else
             var username = User.get('companyName');
 
-        console.log(username);
+
+        //console.log(username);
 
         socket.broadcast.emit('join', username);
 

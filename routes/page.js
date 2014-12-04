@@ -20,7 +20,7 @@ exports.post = function(req, res) {
     var id = req.query.id;
 
     Post.findById(id,function(err, post) {
-        res.render('post-details',{post: post});
+        res.render('post-details',{post: post, user: req.user});
     });
 };
 

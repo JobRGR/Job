@@ -1,0 +1,12 @@
+<div class="container">
+    {{#each users}}
+        <a href="/user-page?id={{this._id}}" class="list-group-item">
+            <img src="{{this.img}}" class="search-img">
+            <h4>{{this.username}}</h4>
+            <p class="list-group-item-text"></p>
+                <h5>{{this.specialty}}</h5>
+                <h6>City: {{this.city}} University:{{this.university}}</h6>
+            </p>
+        </a>
+    {{/each}}
+</div>
