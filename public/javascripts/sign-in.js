@@ -31,6 +31,10 @@ $(document).ready(function(){
 
                     var $title = jqXHR.responseText.split("h1")[1].split("<")[0].split(">")[1];
                     $('.error').html($title).addClass('alert-danger');
+                },
+                500: function(jqXHR) {
+                    var $title = jqXHR.responseText.split("h1")[1].split("<")[0].split(">")[1];
+                    $('.error').html($title).addClass('alert-danger');
                 }
             }
         });
