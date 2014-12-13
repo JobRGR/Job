@@ -60,10 +60,12 @@ $('document').ready(function() {
         if(location.pathname == "/search-page"){
             data = JSON.parse(localStorage.search)
 
-            if(data == null) return;
-            else {
+            if(data != null){
                 localStorage.search = JSON.stringify(null);
                 $("#query").val(data);
+                search(data);
+            } else if($("#query").val().length){
+                data = $("#query").val()
                 search(data);
             }
         }

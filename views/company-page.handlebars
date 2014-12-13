@@ -7,6 +7,14 @@
         <h4>City: {{curcompany.city}}</h4>
         <h4>About Us: {{curcompany.about}}</h4>
         <h4>Contacts: {{curcompany.contacts}}</h4>
+
+        <div class="page-subscribe">
+            {{#if user}}
+                {{#isSubscribe curcompany user}}
+                {{/isSubscribe}}
+            {{/if}}
+        </div>
+
     </div>
 
     {{#each post}}
@@ -17,3 +25,5 @@
             <h6>Created by: {{this.companyName}}</h6></a>
     {{/each}}
 </div>
+
+<script src="/javascripts/subscribe.js"></script>

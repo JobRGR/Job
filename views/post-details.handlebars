@@ -3,7 +3,7 @@
         <div class="page-header">
             <h1>{{post.title}}</h1>
             <h5>{{post.place}}</h5>
-            <h5>Created by: {{post.companyName}}</h5>
+            <h5>Created by: <a href="company-page?id={{post.postAuthor}}">{{post.companyName}}</a></h5>
         </div>
         <p class="col-lg-7">{{post.text}}</p>
         <h5 class="col-lg-7">{{#date post.date}}{{/date}}</h5>

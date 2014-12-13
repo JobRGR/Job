@@ -57,6 +57,10 @@ var schema = new Schema({
         type: String,
         required: true
     },
+    subscribe: {
+        type: Array,
+        required: true
+    },
     hashedPassword: {
         type: String,
         required: true
@@ -247,7 +251,8 @@ schema.statics.registration = function(req, callback) {
                     course: course,
                     city: city,
                     img: img,
-                    skills: skills
+                    skills: skills,
+                    subscribe: [null]
                 });
 
                 user.save(function(err) {
@@ -255,6 +260,25 @@ schema.statics.registration = function(req, callback) {
                     callback(null, user);
                 });
             }
+        }
+    ], callback);
+};
+
+//подписка
+schema.statics.subscribe = function(companyId, username, callback){
+    var User = this;
+
+    async.waterfall([
+        function(callback) {
+            User.findOne({username: username}, callback)
+        },
+        function(user, callback) {
+            user.subscribe.push(companyId)
+
+            user.save(function(err) {
+                if (err) return callback(err);
+                callback(null, user);
+            });
         }
     ], callback);
 };

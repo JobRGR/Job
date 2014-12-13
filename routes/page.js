@@ -36,6 +36,6 @@ exports.company = function(req, res) {
                 Company.findById(id,callback)
             }
         }, function(err, result){
-            res.render('company-page',{curcompany: result.company, post: result.post});
+            res.render('company-page',{curcompany: result.company, post: result.post, user: req.user});
     });
 };

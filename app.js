@@ -107,9 +107,21 @@ var hbs = exphbs.create({//хелперы для хендлбара (добав�
             }, username)
 
             if(filter.length)
-                return ' <h4>You have already Respond.</h4>'
+                return '<h4>You have already Respond.</h4>'
             else
                 return '<button type="submit" class="btn btn-default" id="send-user">Respond to the open position</button>'
+        },
+        isSubscribe: function(company,user, options) {
+            if(!user.subscribe) return false
+
+            var filter = user.subscribe.filter(function(val, index){
+                return val == company['_id']
+            }, company['_id']);
+
+            if(filter.length)
+                return '<h6>You have already Subscribe.</h6>'
+            else
+                return '<button type="submit" class="btn btn-default" id="subscribe">Subscribe</button>'
         }
     }
 });

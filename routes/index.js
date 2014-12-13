@@ -47,4 +47,8 @@ module.exports = function(app) {
     app.get('/user-page',  checkAuth,require('./page').user);
     app.get('/company-page',  checkAuth,require('./page').company);
     app.get('/post-details',  checkAuth,require('./page').post);
+
+
+    app.get('/subscribe', checkAuth.user, require('./subscribe').get);
+    app.post('/subscribe', checkAuth.user, require('./subscribe').post);
 };
