@@ -64,15 +64,24 @@ $(document).ready(function(){
     });
 
     $('#open').click(function(){
-        var label = '<label for="input-text" class="col-lg-2 control-label open-l">Open Question '+($('.open-l').length+1)+'</label>'
+        var label = '<label for="input-text" class="col-lg-2 control-label open-l">Open Question '+($('.open-l').length+1)+'<br><a style="cursor: pointer" class="delete">Delete</a></label>'
         var question = '<div class="col-lg-5"><input name="text" type="textarea" value="" class="form-control" id="open-q" placeholder="Add Question"><br>'
         var answer = '<input name="text" type="textarea" value="" class="form-control" id="open-a" placeholder="Add Answer"></div>'
         var div = '<div class="form-group open-form">'+label+question+answer+'</div>'
 
         $('.question').append(div)
+
+        var $del = $(".open-form").last().find('.delete')
+        $del.click(function() {
+            $(this).parent().parent().remove()
+
+            var $label = $('.open-l')
+            for(var i = 0; i<$label.length; i++)
+                $label.html('Open Question '+(i+1))
+        })
     })
     $('#test').click(function(){
-        var label = '<label for="input-text" class="col-lg-2 control-label test-l">Test Question '+($('.test-l').length+1)+'</label>'
+        var label = '<label for="input-text" class="col-lg-2 control-label test-l">Test Question '+($('.test-l').length+1)+'<br><a style="cursor: pointer" class="delete">Delete</a></label>'
         var question = '<div class="col-lg-4"><input name="text" type="textarea" value="" class="form-control" id="test-q" placeholder="Add Question"><br>'
         var answer = '<input name="text" type="textarea" value="" class="form-control" id="test-a" placeholder="Add Answer"><br>'
         var add = '<div class="test-add '+$('.test-add').length+'"><a style="cursor: pointer">Add answer</a></div></div>';
@@ -89,10 +98,21 @@ $(document).ready(function(){
 
         $('.question').append(div)
 
-        $('.test-add').on('click', function() {
+        var $el = $(".test-form").last().find('.test-add')
+        $el.click(function() {
             var index = $(this).attr('class').split(' ')[1];
             $('.test-type').eq(index).append(type+"<br>");
         })
+
+        var $del = $(".test-form").last().find('.delete')
+        $del.click(function() {
+            $(this).parent().parent().remove()
+
+            var $label = $('.test-l')
+            for(var i = 0; i<$label.length; i++)
+                $label.html('Test Question '+(i+1))
+        })
+
     })
 
 });
