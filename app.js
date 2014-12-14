@@ -101,7 +101,7 @@ var hbs = exphbs.create({//хелперы для хендлбара (добав�
             var resDate = new Date(date);
             return resDate.toLocaleDateString()
         },
-        isUser: function(post,username, options) {
+        isUser: function(post,username, open, test, options) {
             var filter = post.users.filter(function(val, index){
                 return val == username
             }, username)
@@ -109,7 +109,7 @@ var hbs = exphbs.create({//хелперы для хендлбара (добав�
             if(filter.length)
                 return '<h4>You have already Respond.</h4>'
             else
-                return '<button type="submit" class="btn btn-default" id="send-user">Respond to the open position</button>'
+                return '<div class="col-lg-4">'+test+open+'<button type="submit" class="btn btn-default" id="send-user">Respond to the open position</button></div>'
         },
         isSubscribe: function(company,user, options) {
             if(!user.subscribe) return false
