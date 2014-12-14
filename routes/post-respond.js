@@ -14,17 +14,24 @@ exports.get = function(req, res, next){
     var id = req.query.id;
     Post.findById(id, function(err, post){
         //res.json(post)
+        async.parallel({
+            open: function(callback){
+                OpenQ.find({postId: id}, callback)
+            },
+            test: function(callback){
+                TestQ.find({postId: id}, callback)
+            },
+            users: function(callback){
+                User.find({
+                    '_id': { $in: post.users}
+                }, callback)
+            }
+        }, function(err, results){
+//            var users = results.users
 
 
-        User.find({
-            '_id': { $in: post.users}
-        }, function(err, users){
-            //console.log(users);
-
-            res.render('respond-list',{users: users})
-            //res.json(users)
-        });
-
+            res.render('respond-list',{users: results.users})
+        })
 //        async.each(post.users,
 //            function(userId,callback) {
 //                User.find({"_id":userId}, function(err, user){
@@ -58,7 +65,7 @@ exports.post = function(req, res, next) {
     })
 
     async.parallel({
-        open: function(calback){
+        open: function(callback){
             OpenQ.find({
                 '_id': { $in: openArray}
             }, function(err, open){
@@ -76,10 +83,10 @@ exports.post = function(req, res, next) {
                     });
                 }
 
-                calback(null, open)
+                callback(null, open)
             });
         },
-        test: function(calback){
+        test: function(callback){
             TestQ.find({
                 '_id': { $in: testArray}
             }, function(err, test){
@@ -97,7 +104,7 @@ exports.post = function(req, res, next) {
                     });
                 }
 
-                calback(null, test)
+                callback(null, test)
             });
         }
     }, function(err, results){
