@@ -101,10 +101,10 @@ var hbs = exphbs.create({//хелперы для хендлбара (добав�
             var resDate = new Date(date);
             return resDate.toLocaleDateString()
         },
-        isUser: function(post,username, open, test, options) {
+        isUser: function(post,id, open, test, options) {
             var filter = post.users.filter(function(val, index){
-                return val == username
-            }, username)
+                return val == id
+            }, id)
 
             if(filter.length)
                 return '<h4>You have already Respond.</h4>'

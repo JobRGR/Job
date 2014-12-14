@@ -33,14 +33,14 @@ exports.post = function(req, res) {
                     var str = "<h5>Test Questtions</h5>"
 
                     for(var i=0;i<test.length;i++) {
-                        var p = '<p>'+test[i].question+'<p>',
+                        var p = '<p>'+test[i].question+'</p>',
                             input = ""
 
                         for(var j=0;j<test[i].variant.length;j++){
-                            input = input + '<input type="radio" name="browser" value="'+j+'"> ' + test[i].variant[j] + '<br>'
+                            input = input + '<input type="radio" name="test" value="'+(j+1)+'"> ' + test[i].variant[j] + '<br>'
                         }
 
-                        str = str + '<div class="form-group open-form">' + p + input + '</div>'
+                        str = str + '<div class="form-group test-form" data-anachronism="'+test[i].id+'">' + p + '<form>'+ input + '</form></div>'
                     }
 
                     callback(null, test, str)
@@ -55,7 +55,7 @@ exports.post = function(req, res) {
                         p = '<p>'+open[i].question+'<p>',
                         input = '<input name="text" type="textarea" value="" class="form-control" id="open-a" placeholder="Add Answer">'
 
-                        str = str + '<div class="form-group open-form">' + p + input + '</div>'
+                        str = str + '<div class="form-group open-form" data-anachronism="'+open[i].id+'">' + p + input + '</div>'
                     }
 
                     callback(null, open, str)

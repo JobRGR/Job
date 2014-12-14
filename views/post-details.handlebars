@@ -9,7 +9,7 @@
         <h5 class="col-lg-7">{{#date post.date}}{{/date}}</h5>
 
         {{#if user}}
-            {{#isUser post user.username open test}}
+            {{#isUser post user.id open test}}
             {{/isUser}}
         {{/if}}
     </div>

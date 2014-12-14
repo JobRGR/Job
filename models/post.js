@@ -61,7 +61,7 @@ schema.statics.create = function(req,cb) {
 
 schema.statics.respond = function(req, callback){
     var postId = req.body.id,
-        user = req.user.username
+        user = req.user.id
 
     var Post = this;
 

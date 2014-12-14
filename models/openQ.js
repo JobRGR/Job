@@ -16,6 +16,18 @@ var schema = new Schema({
     postId :{
         type: String,
         required: true
+    },
+    userRespondId: {
+        type: Array,
+        required: true
+    },
+    userRespondAnswer: {
+        type: Array,
+        required: true
+    },
+    userCorrect: {
+        type: Array,
+        required: true
     }
 });
 
@@ -25,7 +37,10 @@ schema.statics.create = function(open,postId,cb) {
     var openQ = new OpenQ({
         question : open.question,
         answer : open.answer,
-        postId: postId
+        postId: postId,
+        userRespondId: [null],
+        userRespondAnswer: [null],
+        userCorrect: [null]
     });
 
     openQ.save(function(err) {

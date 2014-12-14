@@ -20,6 +20,18 @@ var schema = new Schema({
     postId: {
         type: String,
         required: true
+    },
+    userRespondId: {
+        type: Array,
+        required: true
+    },
+    userRespondAnswer: {
+        type: Array,
+        required: true
+    },
+    userCorrect: {
+        type: Array,
+        required: true
     }
 });
 
@@ -30,7 +42,10 @@ schema.statics.create = function(test, postId,cb) {
         question : test.question,
         answer : test.answer,
         variant : test.variant,
-        postId: postId
+        postId: postId,
+        userRespondId: [null],
+        userRespondAnswer: [null],
+        userCorrect: [null]
     });
 
     testQ.save(function(err) {
