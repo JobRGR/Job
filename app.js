@@ -122,6 +122,14 @@ var hbs = exphbs.create({//хелперы для хендлбара (добав�
                 return '<h6>You have already Subscribe.</h6>'
             else
                 return '<button type="submit" class="btn btn-default" id="subscribe">Subscribe</button>'
+        },
+        skillsList: function(user) {//выводит список скилов юзера
+            var out = '';
+            var arr = user.skills.split(",");
+            for (var i = 0; i<arr.length; i++) {
+                out += "<li class = 'editable'>" + arr[i] + "</li>";
+            }
+            return out;
         }
     }
 });
