@@ -45,9 +45,6 @@ $(document).ready(function(){
             };
         pdf.addHTML(document.getElementById('cv'), function () {
             var string = pdf.output('datauristring');
-            var height = $('#cv').height();
-            $('iframe').attr('src', string);
-
             var x = window.open();
             x.document.open();
             x.document.location = string;
