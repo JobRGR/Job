@@ -145,6 +145,7 @@ var hbs = exphbs.create({//хелперы для хендлбара (добав�
             var div = '<div class="form-group test-form" data-test-id="'+ test._id +'">'+label+question+answer+add+typeDiv+'</div>'
 
             return div;
+        },
         skillsList: function(user) {//выводит список скилов юзера
             var out = '';
             var arr = user.skills.split(",");
