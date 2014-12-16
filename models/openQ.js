@@ -49,6 +49,36 @@ schema.statics.create = function(open,postId,cb) {
     });
 };
 
+schema.statics.edit =  function(open, postID, callback) {
+    var OpenQ = this;
+    if (open.id == "new"){
+        OpenQ.create(open, postID, function (err) {
+            if (err) return callback(err);
+            callback(null)
+        });
+    }else{
+        async.waterfall([
+            function(callback) {
+                OpenQ.findById(open.id, callback);
+            },
+            function(openQ, callback) {
+                if (openQ) {
+                    openQ.question = open.question;
+                    openQ.answer = open.answer;
+                    openQ.postId = postID;
+
+                    openQ.save(function(err) {
+                        if (err) return callback(err);
+                        callback(null, openQ);
+                    });
+                } else {
+                    callback(new AuthError("Wrong Data"));
+                }
+            }
+        ], callback);
+    }
+};
+
 
 exports.OpenQ = mongoose.model('OpenQ', schema);
 

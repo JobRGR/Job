@@ -52,4 +52,27 @@
     <div class="alert error" role="alert"></div>
 </div>
 
+
+<div class="form-horizontal">
+    <div class="form-group">
+        <label for="input-place" class="col-lg-2 control-label">Add  Test</label>
+        <div class="col-lg-5">
+            <button type="submit" class="btn btn-default" id="test">Add Test question</button>
+            <button type="submit" class="btn btn-default" id="open">Add Open response question</button>
+        </div>
+    </div>
+    <div class="container question">
+        {{#each open}}
+            {{#openOut this @index}}
+            {{/openOut}}
+        {{/each}}
+        {{#each test}}
+            {{#testOut this @index}}
+            {{/testOut}}
+        {{/each}}
+    </div>
+</div>
+
+
 <script src="/javascripts/edit-post.js"></script>
+

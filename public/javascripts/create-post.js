@@ -74,10 +74,6 @@ $(document).ready(function(){
         var $del = $(".open-form").last().find('.delete')
         $del.click(function() {
             $(this).parent().parent().remove()
-
-            var $label = $('.open-l')
-            for(var i = 0; i<$label.length; i++)
-                $label.html('Open Question '+(i+1))
         })
     })
     $('#test').click(function(){
@@ -106,11 +102,7 @@ $(document).ready(function(){
 
         var $del = $(".test-form").last().find('.delete')
         $del.click(function() {
-            $(this).parent().parent().remove()
-
-            var $label = $('.test-l')
-            for(var i = 0; i<$label.length; i++)
-                $label.html('Test Question '+(i+1))
+            $(this).parent().parent().remove();
         })
 
     })
