@@ -152,7 +152,7 @@ var hbs = exphbs.create({//хелперы для хендлбара (добав�
             for (var i = 0; i<arr.length; i++) {
                 out += "<li class = 'editable'>" + arr[i] + "</li>";
             }
-            return out;
+            return out; 
         }
     }
 });
