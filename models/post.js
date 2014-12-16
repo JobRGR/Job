@@ -2,7 +2,7 @@ var crypto = require('crypto');
 var async = require('async');
 var util = require('util');
 var mongoose = require('../lib/mongoose'),
-    Schema = mongoose.Schema;
+    Schema = mongoose.  Schema;
 
 var company = require('./company');
 
@@ -61,7 +61,7 @@ schema.statics.create = function(req,cb) {
 
 schema.statics.respond = function(req, callback){
     var postId = req.body.id,
-        user = req.user.username
+        user = req.user.id
 
     var Post = this;
 

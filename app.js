@@ -101,15 +101,15 @@ var hbs = exphbs.create({//хелперы для хендлбара (добав�
             var resDate = new Date(date);
             return resDate.toLocaleDateString()
         },
-        isUser: function(post,username, options) {
+        isUser: function(post,id, open, test, options) {
             var filter = post.users.filter(function(val, index){
-                return val == username
-            }, username)
+                return val == id
+            }, id)
 
             if(filter.length)
                 return '<h4>You have already Respond.</h4>'
             else
-                return '<button type="submit" class="btn btn-default" id="send-user">Respond to the open position</button>'
+                return '<div class="col-lg-4">'+test+open+'<button type="submit" class="btn btn-default" id="send-user">Respond to the open position</button></div>'
         },
         isSubscribe: function(company,user, options) {
             if(!user.subscribe) return false
@@ -122,6 +122,29 @@ var hbs = exphbs.create({//хелперы для хендлбара (добав�
                 return '<h6>You have already Subscribe.</h6>'
             else
                 return '<button type="submit" class="btn btn-default" id="subscribe">Subscribe</button>'
+        },
+        openOut: function(open, index, options) {
+            var label = '<label for="input-text" class="col-lg-2 control-label open-l">Open Question '+ (index + 1) +'<br><a style="cursor: pointer" class="delete">Delete</a></label>'
+            var question = '<div class="col-lg-5"><input name="text" type="textarea" value="' + open.question + '" class="form-control" id="open-q" placeholder="Add Question"><br>'
+            var answer = '<input name="text" type="textarea" value="' + open.answer + '" class="form-control" id="open-a" placeholder="Add Answer"></div>'
+            var div = '<div class="form-group open-form" data-open-id="'+ open._id +'">'+label+question+answer+'</div>'
+
+            return div;
+        },
+        testOut: function(test, index, options) {
+            var label = '<label for="input-text" class="col-lg-2 control-label test-l">Test Question '+(index + 1)+'<br><a style="cursor: pointer" class="delete">Delete</a></label>'
+            var question = '<div class="col-lg-4"><input name="text" type="textarea" value="'+ test.question +'" class="form-control" id="test-q" placeholder="Add Question"><br>'
+            var answer = '<input name="text" type="textarea" value="'+ test.answer +'" class="form-control" id="test-a" placeholder="Add Answer"><br>'
+            var add = '<div class="test-add '+ index +'"><a style="cursor: pointer">Add answer</a></div></div>';
+
+            var typeDiv = ''
+            for(var i = 0; i < test.variant.length; i++)
+                typeDiv = typeDiv + '<input name="text" type="textarea" value="'+ test.variant[i] +'" class="form-control test-v" placeholder="Add Variant"><br>'
+            typeDiv = '<div class="col-lg-4 test-type">'+typeDiv+'</div>';
+
+            var div = '<div class="form-group test-form" data-test-id="'+ test._id +'">'+label+question+answer+add+typeDiv+'</div>'
+
+            return div;
         }
     }
 });

@@ -2,6 +2,9 @@ var User = require('../models/user').User;
 var Company = require('../models/company').Company;
 var Post = require('../models/post').Post;
 
+var OpenQ = require('../models/openQ').OpenQ;
+var TestQ = require('../models/testQ').TestQ;
+
 var HttpError = require('../error').HttpError;
 var AuthError = require('../models/user').AuthError;
 
@@ -20,7 +23,47 @@ exports.post = function(req, res) {
     var id = req.query.id;
 
     Post.findById(id,function(err, post) {
-        res.render('post-details',{post: post, user: req.user});
+        curPost = post
+
+        async.parallel({
+            testQ: function(callback){
+                TestQ.find({postId: id}, function(err, test){
+                    if(!test.length) return  callback(null,null,"")
+
+                    var str = "<h5>Test Questtions</h5>"
+
+                    for(var i=0;i<test.length;i++) {
+                        var p = '<p>'+test[i].question+'</p>',
+                            input = ""
+
+                        for(var j=0;j<test[i].variant.length;j++){
+                            input = input + '<input type="radio" name="test" value="'+(j+1)+'"> ' + test[i].variant[j] + '<br>'
+                        }
+
+                        str = str + '<div class="form-group test-form" data-anachronism="'+test[i].id+'">' + p + '<form>'+ input + '</form></div>'
+                    }
+
+                    callback(null, test, str)
+                })
+            },
+            openQ: function(callback){
+                OpenQ.find({postId: id}, function(err, open){
+                    if(!open.length) return  callback(null,null,"")
+                    var str = "<h5>Open Questtions</h5>"
+
+                    for(var i=0;i<open.length;i++) {
+                        p = '<p>'+open[i].question+'<p>',
+                        input = '<input name="text" type="textarea" value="" class="form-control" id="open-a" placeholder="Add Answer">'
+
+                        str = str + '<div class="form-group open-form" data-anachronism="'+open[i].id+'">' + p + input + '</div>'
+                    }
+
+                    callback(null, open, str)
+                })
+            }
+        }, function(err, results){
+            res.render('post-details',{post: post, user: req.user, open: results.openQ[1], test: results.testQ[1]});
+        })
     });
 };
 
