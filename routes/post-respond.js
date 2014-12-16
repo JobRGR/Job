@@ -27,7 +27,35 @@ exports.get = function(req, res, next){
                 }, callback)
             }
         }, function(err, results){
-//            var users = results.users
+            var users = results.users,
+                test = results.test,
+                open = results.open
+
+            for(var i=0;i<users.length;i++){
+                var status = 0;
+
+                for(var j=0;j<test.length;j++) {
+                    var index = getIndex(test[j].userRespondId, users[i].id);
+
+                    if (index == undefined) continue
+
+                    status += test[j].userCorrect[index]
+                }
+
+                for(var j=0;j<open.length;j++) {
+                    var index = getIndex(open[j].userRespondId, users[i].id);
+
+                    if (index == undefined) continue
+
+                    status += open[j].userCorrect[index]
+                }
+
+                users[i]['status'] = status
+            }
+
+            users.sort(function(a,b){
+                return a['status'] < b['status']
+            })
 
 
             res.render('respond-list',{users: results.users})

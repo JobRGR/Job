@@ -73,7 +73,7 @@ $(document).ready(function(){
 
         var $del = $(".open-form").last().find('.delete')
         $del.click(function() {
-            $(this).parent().parent().remove()
+          $(this).parent().parent().remove()
         })
     })
     $('#test').click(function(){
@@ -102,7 +102,7 @@ $(document).ready(function(){
 
         var $del = $(".test-form").last().find('.delete')
         $del.click(function() {
-            $(this).parent().parent().remove();
+            $(this).parent().parent().remove()
         })
 
     })
