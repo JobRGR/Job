@@ -84,16 +84,24 @@ exports.post = function(req, res, next) {
     var openObj = req.body.open,
         testObj = req.body.test;
 
-    var openArray = openObj.map(function(val){
-        return val.id
-    })
+    if(openObj)
+        var openArray = openObj.map(function(val){
+            return val.id
+        })
+    else
+        var openArray = []
 
-    var testArray = testObj.map(function(val){
-        return val.id
-    })
+    if(testObj)
+        var testArray = testObj.map(function(val){
+            return val.id
+        })
+    else
+        var testArray = []
 
     async.parallel({
         open: function(callback){
+            if(!openArray.length) return callback(null, null)
+
             OpenQ.find({
                 '_id': { $in: openArray}
             }, function(err, open){
@@ -115,6 +123,8 @@ exports.post = function(req, res, next) {
             });
         },
         test: function(callback){
+            if(!testArray.length) return callback(null, null)
+
             TestQ.find({
                 '_id': { $in: testArray}
             }, function(err, test){
