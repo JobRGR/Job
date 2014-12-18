@@ -73,8 +73,14 @@ var schema = new Schema({
         type: Date,
         default: Date.now
     },
-    work_experience:{
-
+    work_experience:[{
+        JobTitle:{type: String},
+        Company:{type: String},
+        workingTime:{start:{type:Date},end:{type:Date}},
+        description:{type: String}
+    }],
+    personal_info: {
+        type:String
     }
 });
 

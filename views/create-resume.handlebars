@@ -18,7 +18,7 @@
         </div>
 
         <div id="name">
-            <h1 class="quickFade delayTwo editable">{{user.firstname}} {{user.secondname}}</h1>
+            <h1 class="quickFade delayTwo"><span class = "editable">{{user.firstname}}</span> <span class = "editable">{{user.secondname}}</span></h1>
             <h2 class="quickFade delayThree editable">Job Title</h2>
         </div>
 
@@ -41,7 +41,7 @@
                 </div>
 
                 <div class="sectionContent">
-                    <p class="editable">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer dolor metus, interdum at scelerisque in, porta at lacus. Maecenas dapibus luctus cursus. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec ultricies massa et erat luctus hendrerit. Curabitur non consequat enim. Vestibulum bibendum mattis dignissim. Proin id sapien quis libero interdum porttitor.</p>
+                    <p class="editable">{{user.personal_info}}</p>
                 </div>
             </article>
             <div class="clear"></div>
@@ -56,9 +56,9 @@
 
             <div class="sectionContent">
                 <article>
-                    <h2 class="editable">Job Title at Company</h2>
-                    <p class="subDetails editable">April 2011 - Present</p>
-                    <p class="editable">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec ultricies massa et erat luctus hendrerit. Curabitur non consequat enim. Vestibulum bibendum mattis dignissim. Proin id sapien quis libero interdum porttitor.</p>
+                    <h2><span class="editable">{{user.work_experience.JobTitle}}</span> at <span class="editable">{{user.work_experience.Company}}</span></h2>
+                    <p class="subDetails editable"><span class="editable">{{user.work_experience.workingTime.start}}</span> - <span class="editable">{{user.work_experience.workingTime.end}}</span></p>
+                    <p class="editable">{{user.work_experience.description}}</p>
                 </article>
             </div>
             <div class="clear"></div>

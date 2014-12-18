@@ -1,13 +1,35 @@
 $(document).ready(function(){
     var block;
 
+    function send_to_server(a){
+        new_user = {};
+        new_user.firstname = a[0].innerHTML;
+        new_user.secondname = a[1].innerHTML;
+//        new_user.work_experience:[{
+//            JobTitle:{type: String},
+//            Company:{type: String},
+//            workingTime:{start:{type:Date},end:{type:Date}},
+//            description:{type: String}
+//        }],
+//        new_user.personal_info:
+        $.ajax({
+            url: "/create-resume",
+            method: "POST",
+            data: new_user
+//            complete: function() {
+//                $(":submit", form).button("reset");
+//            }
+        });
+        return false;
+    }
+
     function setCursor(){
         var temp;
         temp=$('#textarea').val();
         $('#textarea').val('');
         $('#textarea').focus();
-        $('#textarea').val(temp);;
-    };
+        $('#textarea').val(temp);
+    }
 
     function a () {
         block = this;
@@ -32,7 +54,7 @@ $(document).ready(function(){
             });
         });
 
-    };
+    }
 
     $(".editable").click(a);
 
@@ -53,6 +75,8 @@ $(document).ready(function(){
     });
 
         $('#save').click(function() {
+            send_to_server(document.getElementsByClassName('editable'));
+
             pdf = new jsPDF('p', 'pt', 'a4'),
                 specialElementHandlers = {
                     '#editor': function (element, renderer) {

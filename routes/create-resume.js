@@ -1,7 +1,9 @@
-var Post = require('../models/post').Post;
-
 var HttpError = require('../error').HttpError;
 var AuthError = require('../models/user').AuthError;
+
+var mongoose = require('../lib/mongoose');
+var users = mongoose.model('User');
+var async = require('async');
 
 exports.get = function(req, res) {
     res.render('create-resume');
@@ -9,16 +11,18 @@ exports.get = function(req, res) {
 
 
 exports.post = function(req, res, next) {
-    Post.edit(req, function (err, post) {
-        if (err) {
-            if(err instanceof AuthError){
-                return next(new HttpError(403, err.message));
-            } else {
-                return next(err);
-            }
+
+    async.waterfall([
+        function(callback){
+            users.find({username : req.user.username },function(err,res){
+                callback(null,res);
+            });
         }
-        res.send({post: post});
-    })
+    ], function(err, result){
+        result[0].firstname = req.body.firstname;
+        result[0].save();
+        console.log(result[0].firstname);
+    });
 }
 
 
