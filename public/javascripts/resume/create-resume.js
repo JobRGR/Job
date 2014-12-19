@@ -69,13 +69,15 @@ $(document).ready(function(){
         setCursor(document.getElementById('textarea'));
         $('#textarea').off();
         $('#textarea').blur(function(){
+
             block.innerHTML = $('#textarea')[0].value;
-            console.log( block.innerHTML);
+
             var th = this;
             $(th).replaceWith(block);
             $(th).ready(function(){
                 $(".editable").click(a)
             });
+            send_to_server(document.getElementsByClassName('editable'));
         });
 
     }
