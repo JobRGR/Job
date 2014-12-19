@@ -29,3 +29,19 @@ module.exports.company = function(req, res, next) {
 
     next();
 };
+
+function render(req, res){
+    res.render('home', { title: 'Express' })
+}
+
+module.exports.curuser = function(req, res, next) {
+    if(req.user)
+        if (req.user.id != req.query.id) {
+            return render(req, res)
+        }
+
+    if(req.company)
+        return render(req, res)
+
+    next();
+};

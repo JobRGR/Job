@@ -68,8 +68,13 @@ exports.get = function(req, res) {
                 status += test[i].userCorrect[index]
 
                 ansTest.push({
-                    test: test[i],
-                    index: index
+                    question: test[i].question,
+                    answer:test[i].answer,
+                    variant:test[i].variant ,
+                    postId: test[i].postId,
+                    userRespondId: test[i].userRespondId[index],
+                    userRespondAnswer: test[i].userRespondAnswer[index],
+                    userCorrect: test[i].userCorrect[index]
                 })
             }
 
@@ -82,15 +87,19 @@ exports.get = function(req, res) {
                 status += open[i].userCorrect[index]
 
                 ansOpen.push({
-                    test: test[i],
-                    index: index
+                    question: open[i].question,
+                    answer: open[i].answer,
+                    postId : open[i].postId,
+                    userRespondId: open[i].userRespondId[index],
+                    userRespondAnswer: open[i].userRespondAnswer[index],
+                    userCorrect: open[i].userCorrect[index]
                 })
             }
 
         user['status'] = status
 
 
-        res.render('respond-page',{curuser: user, test: ansTest, open: ansOpen, status: status});
+        res.render('respond-page',{curuser: user, tests: ansTest, opens: ansOpen, status: status});
     })
 
 };

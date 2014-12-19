@@ -41,12 +41,14 @@ input[type='checkbox'] {
   width: 200px;
   border-radius: 5px;
 }
+.red-icon,
 .red:hover {
   color: #f00;
 }
 .yellow:hover {
   color: #ffbf5a;
 }
+.green-icon,
 .green:hover {
   color: #71d118;
 }

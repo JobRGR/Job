@@ -52,8 +52,8 @@ module.exports = function(app) {
     app.get('/subscribe', checkAuth.user, require('./subscribe').get);
     app.post('/subscribe', checkAuth.user, require('./subscribe').post);
 
-    app.get('/create-resume', checkAuth.user, require('./create-resume').get);
-    app.post('/create-resume', checkAuth.user, require('./create-resume').post);
+    app.get('/create-resume', checkAuth, require('./create-resume').get);
+    app.post('/create-resume', checkAuth, require('./create-resume').post);
 
 
     app.get('/respond-page', checkAuth.company, require('./respond-page').get);

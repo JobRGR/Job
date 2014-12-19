@@ -24,6 +24,53 @@
     <h5>Description: {{curuser.work_experience.description}}</h5>
     <h5>Start: {{#date curuser.work_experience.workingTime.start}}{{/date}}</h5>
 
+    <div class="page-header">
+        <h5>Open Question</h5>
+    </div>
 
+    {{#each opens}}
+        <div>
+            <h5>Question: {{this.question}}</h5>
+            <h5>Answer: <i>{{this.answer}}</i></h5>
+            <h5>User: {{this.userRespondAnswer}}
+
+                {{#if this.userCorrect}}
+                    <i class = "glyphicon glyphicon-ok green-icon"></i>
+                {{else}}
+                    <i class = "glyphicon glyphicon-remove red-icon"></i>
+                {{/if}}
+            </h5>
+        </div>
+    {{/each}}
+
+    <div class="page-header">
+        <h5>Test Question</h5>
+    </div>
+
+    {{#each tests}}
+        <div>
+            <h5>Question: {{this.question}}</h5>
+
+            <h5>Variant:</h5>
+
+            <ol>
+                {{#each this.variant}}
+                    <li>{{this}}<br> </li>
+                {{/each}}
+            </ol>
+
+            <h5>Answer: <i>{{this.answer}}</i></h5>
+            <h5> User: {{this.userRespondAnswer}}
+
+                {{#if this.userCorrect}}
+                    <i class = "glyphicon glyphicon-ok green-icon"></i>
+                {{else}}
+                    <i class = "glyphicon glyphicon-remove red-icon"></i>
+                {{/if}}
+
+
+            </h5>
+        </div>
+    {{/each}}
 
 </div>
