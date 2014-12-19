@@ -229,7 +229,7 @@ schema.statics.registration = function(req, callback) {
     var img = req.body.img;
     var skills = req.body.skills;
 
-    var jobTitle = req.body.postion;
+    var jobTitle = req.body.position;
     var company = req.body.company;
     var workingTime = {
         start: new Date(req.body.start),
