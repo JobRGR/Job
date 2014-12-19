@@ -18,5 +18,4 @@ Job
 
 ####Start MongoDB:
 
-- Start DB:
-``` mongod```
+- Start DB: ``` mongod```
