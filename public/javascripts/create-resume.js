@@ -5,6 +5,31 @@ $(document).ready(function(){
         new_user = {};
         new_user.firstname = a[0].innerHTML;
         new_user.secondname = a[1].innerHTML;
+
+        new_user.mail = a[2].innerHTML;
+        new_user.website = a[3].innerHTML;
+        new_user.mobile = a[4].innerHTML;
+        new_user.personal_info = a[5].innerHTML;
+
+        new_user.work_experience = {};
+        new_user.work_experience.workingTime = {};
+        new_user.work_experience.JobTitle = a[6].innerHTML;
+        new_user.work_experience.Company = a[7].innerHTML;
+        new_user.work_experience.workingTime.start = a[8].innerHTML;
+        new_user.work_experience.workingTime.end = a[9].innerHTML;
+        new_user.work_experience.description = a[10].innerHTML;
+
+
+        new_user.skills = [];
+        var i;
+        for (i = 11; a[i].localName == "li"; i++)
+            new_user.skills[i-11] = a[i].innerHTML;
+
+        new_user.university = a[i].innerHTML;
+        new_user.specialty = a[i+1].innerHTML;
+        new_user.university_desc = a[i+1].innerHTML;
+
+        console.log(a);
 //        new_user.work_experience:[{
 //            JobTitle:{type: String},
 //            Company:{type: String},

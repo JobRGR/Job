@@ -150,7 +150,7 @@ var hbs = exphbs.create({//хелперы для хендлбара (добав�
             var out = '';
             var arr = user.skills.split(",");
             for (var i = 0; i<arr.length; i++) {
-                out += "<li class = 'editable'>" + arr[i] + "</li>";
+                out += "<li class = 'editable' >" + arr[i] + "</li>";
             }
             return out; 
         }
