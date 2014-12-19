@@ -14,3 +14,5 @@ Job
 
 - Run server: ```npm run start```
 
+####Start MongoDB:
+``` mongod```
