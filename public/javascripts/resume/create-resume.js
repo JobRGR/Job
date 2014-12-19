@@ -29,7 +29,6 @@ $(document).ready(function(){
         new_user.specialty = a[i+1].innerHTML;
         new_user.university_desc = a[i+1].innerHTML;
 
-        console.log(a);
 //        new_user.work_experience:[{
 //            JobTitle:{type: String},
 //            Company:{type: String},
@@ -82,22 +81,6 @@ $(document).ready(function(){
     }
 
     $(".editable").click(a);
-
-    $('#preview').click(function() {
-        pdf = new jsPDF('p', 'pt', 'a4'),
-            specialElementHandlers = {
-                '#editor': function (element, renderer) {
-                    return true;
-                }
-            };
-        pdf.addHTML(document.getElementById('cv'), function () {
-            var string = pdf.output('datauristring');
-            var x = window.open();
-            x.document.open();
-            x.document.location = string;
-
-        });
-    });
 
         $('#save').click(function() {
             send_to_server(document.getElementsByClassName('editable'));

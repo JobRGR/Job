@@ -6,7 +6,12 @@ var users = mongoose.model('User');
 var async = require('async');
 
 exports.get = function(req, res) {
-    res.render('create-resume');
+    var User = require('../models/user').User;
+    var is = req.user ? (req.user._id == req.query.id) : false;
+    var user = User.findOne({_id:req.query.id},function(err,result){
+        res.render('create-resume',{res : is,curUser : result});
+    });
+
 }
 
 
@@ -42,7 +47,7 @@ exports.post = function(req, res, next) {
                     university_desc : req.body.university_desc
                 }
             },
-            function(err){
+            function (err){
                 console.log(err);
             }
         )
