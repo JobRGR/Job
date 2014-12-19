@@ -14,25 +14,14 @@ exports.post = function(req, res, next) {
 
         async.parallel({
             open: function(callback){
-                OpenQ.find({
+                OpenQ.remove({
                     'postId': id
-                }, function(err, open){
-                    for(var i=0;i<open.length;i++)
-                        open[i].remove()
-
-
-                    callback(null, open)
-                });
+                }, callback);
             },
             test: function(callback){
-                TestQ.find({
+                TestQ.remove({
                     'postId': id
-                }, function(err, test){
-                    for(var i=0;i<test.length;i++)
-                        test[i].remove()
-
-                    callback(null, test)
-                });
+                },callback);
             }
         }, function(err, results){
             if(err) return

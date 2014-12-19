@@ -229,6 +229,14 @@ schema.statics.registration = function(req, callback) {
     var img = req.body.img;
     var skills = req.body.skills;
 
+    var jobTitle = req.body.postion;
+    var company = req.body.company;
+    var workingTime = {
+        start: new Date(req.body.start),
+        end: new Date()
+    };
+    var description = req.body.description;
+
     var User = this;
 
     async.waterfall([
@@ -263,6 +271,11 @@ schema.statics.registration = function(req, callback) {
                     skills: skills,
                     subscribe: [null]
                 });
+
+                if(jobTitle) user.work_experience.jobTitle = jobTitle;
+                if(company) user.work_experience.company = company;
+                if(req.body.start) user.work_experience.workingTime = workingTime;
+                if(description) user.work_experience.description = description;
 
                 user.save(function(err) {
                     if (err) return callback(err);

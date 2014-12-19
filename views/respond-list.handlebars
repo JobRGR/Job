@@ -1,6 +1,6 @@
 <div class="container">
     {{#each users}}
-        <a href="/user-page?id={{this._id}}" class="list-group-item">
+        <a href="/respond-page?UId={{this._id}}&PId={{this.postId}}" class="list-group-item">
             <img src="{{this.img}}" class="search-img">
             <h4>{{this.username}}</h4>
             <p class="list-group-item-text"></p>

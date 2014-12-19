@@ -84,6 +84,12 @@ $(document).ready(function(){
 
 
         for(var i = 0; i<arr.length; i++){
+            var isContinue = arr[i].name == "position" ||
+                arr[i].name == "company" ||
+                arr[i].name == "description" ||
+                arr[i].name == "start"
+
+            if(isContinue) continue
 
             if(!arr[i].value.trim().length){
                 ans.message = "Wrong " + arr[i].name + "."

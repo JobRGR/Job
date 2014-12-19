@@ -10,8 +10,9 @@ var User = require('../models/user').User;
 
 var async = require('async')
 
+var id = ''
 exports.get = function(req, res, next){
-    var id = req.query.id;
+    id = req.query.id;
     Post.findById(id, function(err, post){
         //res.json(post)
         async.parallel({
@@ -55,6 +56,9 @@ exports.get = function(req, res, next){
 
             users.sort(function(a,b){
                 return a['status'] < b['status']
+            }).map(function(a){
+                a['postId'] = id
+                return a
             })
 
 

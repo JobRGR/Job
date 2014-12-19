@@ -54,4 +54,7 @@ module.exports = function(app) {
 
     app.get('/create-resume', checkAuth.user, require('./create-resume').get);
     app.post('/create-resume', checkAuth.user, require('./create-resume').post);
+
+
+    app.get('/respond-page', checkAuth.company, require('./respond-page').get);
 };
