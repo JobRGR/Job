@@ -13,8 +13,8 @@ $(document).ready(function(){
 
         new_user.work_experience = {};
         new_user.work_experience.workingTime = {};
-        new_user.work_experience.JobTitle = a[6].innerHTML;
-        new_user.work_experience.Company = a[7].innerHTML;
+        new_user.work_experience.jobTitle = a[6].innerHTML;
+        new_user.work_experience.company = a[7].innerHTML;
         new_user.work_experience.workingTime.start = a[8].innerHTML;
         new_user.work_experience.workingTime.end = a[9].innerHTML;
         new_user.work_experience.description = a[10].innerHTML;
