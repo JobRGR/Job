@@ -69,7 +69,7 @@ module.exports = function(server) {
 
     var User = {}
 
-    io.set('origins', 'localhost:*');
+//    io.set('origins', 'localhost:*');
     io.set('logger', log);
 
     io.set('authorization', function(handshake, callback) {
