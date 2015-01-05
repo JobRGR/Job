@@ -10,7 +10,9 @@ var config = require('./config');
 var http = require('http');
 var HttpError = require('./error').HttpError;
 
-var app = express();
+//var app = express();
+var app = module.exports.app = exports.app = express();
+app.use(require('connect-livereload')());
 
 app.set('port', config.get('port'));
 
@@ -18,7 +20,7 @@ var server = http.createServer(app);
 server.listen(config.get('port'), function(){
     log.info('Express server listening on port ' + config.get('port'));
 });
-console.log('Express server listening on port ' + app.get('port'));
+console.log('Express server listening on port ' + app.get('port'))
 
 // uncomment after placing your favicon in /public
 //app.use(favicon(__dirname + '/public/favicon.ico'));
