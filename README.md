@@ -7,15 +7,6 @@ Job
 
 ===
 
-####Bower install:
-
-- Install all dependencies:
-``` bower install```
-
-- Run server: ```npm run start```
-
-===
-
 ####Start MongoDB:
 
 - Start DB: ``` mongod```
